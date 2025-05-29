@@ -5,6 +5,9 @@
  *****************************************************************/
 import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@7/+esm';
 import { renderRich } from './richRender.js';
+function iconPath (state){
+  return `./assets/${state === 'Not started' ? 'Notstarted' : state}.png`;
+}
 const DB_VER = 2;
 /*  BD & constantes  */
 const db = await openDB('skills-trainer', DB_VER, {
@@ -15,8 +18,7 @@ const db = await openDB('skills-trainer', DB_VER, {
   }
 });
 const STATES = ['Not started','Attempted','Familiar','Proficient','Mastered'];
-const ICON   = s => `./assets/${s}.png`;
-
+const ICON = s => iconPath(s);
 function toast (m,ok=true){ Toastify({text:m,duration:2000,gravity:'top',
   className:ok?'bg-emerald-600':'bg-rose-600'}).showToast(); }
 

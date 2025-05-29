@@ -252,3 +252,6 @@ html[data-theme="dark"] .text-slate-600,
 html[data-theme="dark"] .text-slate-700 {
   color: var(--fg) !important;   /* usa el blanco definido para fg */
 }
+
+/* Aviso demo: texto siempre visible en modo dark */
+html[data-theme="dark"] #demoNotice div{ color: var(--fg); }

@@ -8,6 +8,9 @@ import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@7/+esm';
 import { checkAchievements, registerReview } from './gamification.js';
 import { thresholds, warmUpNeed, dayCount } from './poolHelpers.js';
 import { renderRich } from './richRender.js';
+function iconPath (state){
+  return `./assets/${state === 'Not started' ? 'Notstarted' : state}.png`;
+}
 
 // ───────────────────────────────── Base de datos
 const DB_VER = 2;
@@ -94,7 +97,7 @@ let firstTry     = true;
 let hintPointer  = 0;
 let previewMode  = false;  
 const DAY_MS = 86_400_000;
-const ICON = s=>`./assets/${s}.png`;          /* (ya existía para biblio.js) */
+const ICON = s => iconPath(s);         /* (ya existía para biblio.js) */
 function isDue (rec, poolN = 10){
   if (!rec) return true;                         // nunca vista
 
@@ -188,7 +191,7 @@ async function openBranch (branch) {
       'p-5 cursor-pointer hover:ring-2 ring-indigo-400';
 
     card.innerHTML = `
-        <img src="./assets/${state}.png" alt="${state}" class="h-16">
+        <img src="${iconPath(state)}" alt="${state}" class="h-16">
         <h4 class="font-semibold text-center">${skill.name}</h4>`;
 
     /* ─── Recomendar solo si no hemos llegado al límite ─── */

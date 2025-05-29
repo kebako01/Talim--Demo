@@ -168,6 +168,43 @@
     </div>
   </section>
 
+  <!-- ⚠️ Aviso demo (oculto por defecto) -->
+  <div id="demoNotice"
+      class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+    <div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100
+                p-8 rounded-xl max-w-md w-full mx-4 space-y-4 text-center">
+      <h2 class="text-2xl font-bold">⚠️ Esto es una DEMO</h2>
+      <p>• No está optimizada.<br>
+        • Aún contiene errores de código.<br>
+        • El sistema está incompleto y todo se ejecuta <i>client-side</i>
+          (sin backend).<br>
+        • La página usa un sistema tipo SRS (repetición espaciada) con una mecánica ligera tipo SMS, pero aún está incompleto y puede generar errores.</p>
+      <button id="demoOk"
+              class="mt-2 px-4 py-2 rounded bg-indigo-600 text-white
+                    hover:bg-indigo-700 active:scale-95 transition">
+        Entendido
+      </button>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const box   = document.getElementById('demoNotice');
+    const close = document.getElementById('demoOk');
+
+    /* ¿El usuario ya lo vio antes? */
+    if (!localStorage.getItem('demoSeen')) {
+      box.classList.remove('hidden');        // mostrar overlay
+    }
+
+    /* Al pulsar “Entendido” lo ocultamos y guardamos la marca */
+    close.onclick = () => {
+      box.classList.add('hidden');
+      localStorage.setItem('demoSeen', '1');
+    };
+  });
+  </script>
+
   <!-- Lógica -->
   <script type="module" src="./index.js"></script>
   <script type="module" src="./assistant.js"></script>
