@@ -92,7 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Racha 🔥 ---------- */
   (async () => {
     const { openDB } = await import('https://cdn.jsdelivr.net/npm/idb@7/+esm');
-    const db   = await openDB('skills-trainer', 1);
+    const DB_VER = 2;
+    const db = await openDB('skills-trainer', DB_VER, {
+      upgrade (db) {                           // se llama SOLO si la BD aún no existe
+        if (!db.objectStoreNames.contains('progress')) {
+          db.createObjectStore('progress', { keyPath: 'skillId' });
+        }
+      }
+    });
     const rows = await db.getAll('progress');
     const DAY  = 86_400_000;
     const iso  = t => new Date(t).toISOString().slice(0, 10);

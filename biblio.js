@@ -5,10 +5,14 @@
  *****************************************************************/
 import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@7/+esm';
 import { renderRich } from './richRender.js';
-
+const DB_VER = 2;
 /*  BD & constantes  */
-const db = await openDB('skills-trainer', 1, {
-  upgrade (db) { db.createObjectStore('progress', { keyPath:'skillId' }); }
+const db = await openDB('skills-trainer', DB_VER, {
+  upgrade (db) {
+    if (!db.objectStoreNames.contains('progress')) {
+      db.createObjectStore('progress', { keyPath: 'skillId' });
+    }
+  }
 });
 const STATES = ['Not started','Attempted','Familiar','Proficient','Mastered'];
 const ICON   = s => `./assets/${s}.png`;

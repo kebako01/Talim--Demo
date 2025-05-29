@@ -3,7 +3,14 @@
  *****************************************************************/
 import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@7/+esm';
 const DAY      = 86_400_000;
-const db       = await openDB('skills-trainer',1);
+const DB_VER = 2;
+const db = await openDB('skills-trainer', DB_VER, {
+  upgrade (db) {                           // se llama SOLO si la BD aún no existe
+    if (!db.objectStoreNames.contains('progress')) {
+      db.createObjectStore('progress', { keyPath: 'skillId' });
+    }
+  }
+});
 const JSONPATH = 'assets/gamification.json';
 const KEY_OK   = 'unlockedEvents';
 let   UNLOCKED = JSON.parse(localStorage.getItem(KEY_OK)||'[]');

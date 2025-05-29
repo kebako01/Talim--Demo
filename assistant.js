@@ -3,7 +3,14 @@
  *****************************************************************/
 import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@7/+esm';
 import { buildMicroQueue } from './queueHelpers.js';
-const db   = await openDB('skills-trainer',1);
+const DB_VER = 2;
+const db = await openDB('skills-trainer', DB_VER, {
+  upgrade (db) {
+    if (!db.objectStoreNames.contains('progress')) {
+      db.createObjectStore('progress', { keyPath: 'skillId' });
+    }
+  }
+});
 const DAY  = 86_400_000;
 const STATES=['Not started','Attempted','Familiar','Proficient','Mastered'];
 /* ---------- asegurar símbolo robot ---------- */

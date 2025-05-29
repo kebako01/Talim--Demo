@@ -10,9 +10,12 @@ import { thresholds, warmUpNeed, dayCount } from './poolHelpers.js';
 import { renderRich } from './richRender.js';
 
 // ───────────────────────────────── Base de datos
-const db = await openDB('skills-trainer', 1, {
+const DB_VER = 2;
+const db = await openDB('skills-trainer', DB_VER, {
   upgrade (db) {
-    db.createObjectStore('progress', { keyPath: 'skillId' }); // skillId = branch|skill
+    if (!db.objectStoreNames.contains('progress')) {
+      db.createObjectStore('progress', { keyPath: 'skillId' });
+    }
   }
 });
 

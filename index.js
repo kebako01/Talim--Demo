@@ -29,10 +29,12 @@ function isDue (rec, poolN = 10){
   const daysGone = dayCount(Date.now()) - dayCount(rec.last);
   return daysGone >= rec.interval;
 }
-
-const db = await openDB('skills-trainer', 1, {
-  upgrade (db) {
-    db.createObjectStore('progress', { keyPath: 'skillId' });
+const DB_VER = 2;
+const db = await openDB('skills-trainer', DB_VER, {
+  upgrade (db) {                           // se llama SOLO si la BD aún no existe
+    if (!db.objectStoreNames.contains('progress')) {
+      db.createObjectStore('progress', { keyPath: 'skillId' });
+    }
   }
 });
 

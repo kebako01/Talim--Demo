@@ -9,7 +9,14 @@ const WARMUP_INT  = 0.02;       //  ← opcional / coherencia
 
 const STATES = ['Not started','Attempted','Familiar','Proficient','Mastered'];
 const DAY_MS = 86_400_000;
-const dbP    = openDB('skills-trainer',1);
+const DB_VER = 2;
+const db = await openDB('skills-trainer', DB_VER, {
+  upgrade (db) {
+    if (!db.objectStoreNames.contains('progress')) {
+      db.createObjectStore('progress', { keyPath: 'skillId' });
+    }
+  }
+});
 
 function isDue (rec, poolN = 10){
   if (!rec) return true;                         // nunca vista
