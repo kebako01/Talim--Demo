@@ -429,19 +429,24 @@ async function updateProgress (firstTryCorrect) {
       };
 
   const poolN = queue[qPtr].skill.questions.length;
-  const { up, down, minInt } = thresholds(poolN);   // ← NUEVO
+  const { up, down, minInt } = thresholds(poolN);
 
-  /* ───── Reaprendizaje: contador de fallos ───── */
+  /* ─── idx SE DECLARA AL PRINCIPIO ─── */
+  let idx = STATES.indexOf(rec.state);
+
+  /* 1. subida / bajada rápida según firstTryCorrect --------------- */
   if (firstTryCorrect) {
     rec.streak++;
-    if (rec.streak >= up) {              // ← usa umbral dinámico
+    if (rec.streak >= up) {               // usa umbral dinámico
       idx = Math.min(idx + 1, 4);
       rec.streak = 0;
     }
   } else {
     rec.streak = 0;
-    idx = Math.max(idx - down, 1);       // ← bajada flexible
+    idx = Math.max(idx - down, 1);
   }
+
+  /* estadísticas … (sin cambios) ---------------------------------- */
   const keyStats = `${key}|diff${q.difficulty}`;
   const st = JSON.parse(localStorage.getItem('stats')||'{}');
   const o  = st[keyStats] || { seen:0, hits:0 };
@@ -449,40 +454,24 @@ async function updateProgress (firstTryCorrect) {
   st[keyStats] = o;
   localStorage.setItem('stats', JSON.stringify(st));
 
-  /* ───── Ajuste de estado general ───── */
-  let idx = STATES.indexOf(rec.state);
-
-  if (firstTryCorrect) {                          // acierto
-    rec.streak++;
-    if (rec.streak >= 3) { idx=Math.min(idx+1,4); rec.streak=0; }
-  } else {                                        // fallo
-    rec.streak = 0;
-
-    /*  Reaprendizaje: 2º fallo seguido estando en Mastered  */
-    if (rec.state === 'Mastered' && rec.consecutiveFails >= 2) {
-      idx  = STATES.indexOf('Familiar');          // resetear
-      toast('⚠️ Volvamos a repasar esto', false);
-    } else {
-      idx = Math.max(idx - sev, 1);               // degradación normal
-    }
-  }
-
+  /* 2. Ajuste de estado general y spaced repetition ---------------- */
   rec.state = STATES[idx];
 
-  /* ───── Spaced-repetition (SM-2 light) ───── */
-  const q = firstTryCorrect ? 5 : 2;
-  rec.efactor = Math.max(1.3, rec.efactor+(0.1-(5-q)*(0.08+(5-q)*0.02)));
+  const qScore = firstTryCorrect ? 5 : 2;            // renombrado para no chocar
+  rec.efactor = Math.max(1.3,
+      rec.efactor + (0.1 - (5 - qScore) * (0.08 + (5 - qScore) * 0.02)));
+
   rec.interval = firstTryCorrect
       ? (idx<=1?1: idx===2?3: idx===3?7: Math.round(rec.interval*rec.efactor))
       : 1;
-  /* ─── contadores de repeticiones ─── */
+
   rec.repetitions = (rec.repetitions||0) + 1;
-  if (rec.repetitions === 1) toast('💡 Se habilitan 3 repeticiones rápidas para asentar la habilidad');
-  /* mantener intervalo corto en calentamiento */
+  if (rec.repetitions === 1)
+    toast('💡 Se habilitan 3 repeticiones rápidas para asentar la habilidad');
+
   const warmReq = warmUpNeed(rec.state, poolN);
-  if (warmReq && rec.repetitions < warmReq){
-  rec.interval = minInt;
-  }
+  if (warmReq && rec.repetitions < warmReq) rec.interval = minInt;
+
   rec.last = Date.now();
   rec.reviewCount = (rec.reviewCount||0) + 1;
   await db.put('progress', rec);

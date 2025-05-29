@@ -10,7 +10,7 @@ const WARMUP_INT  = 0.02;       //  ← opcional / coherencia
 const STATES = ['Not started','Attempted','Familiar','Proficient','Mastered'];
 const DAY_MS = 86_400_000;
 const DB_VER = 2;
-const db = await openDB('skills-trainer', DB_VER, {
+const dbP = openDB('skills-trainer', DB_VER, {
   upgrade (db) {
     if (!db.objectStoreNames.contains('progress')) {
       db.createObjectStore('progress', { keyPath: 'skillId' });
@@ -34,7 +34,7 @@ function isDue (rec, poolN = 10){
 }
 
 export async function buildMicroQueue () {
-  const db      = await dbP;
+  const db = await dbP;
   const DATA_Q  = await (await fetch('./assets/questions.json')).json();
   const cfg     = JSON.parse(localStorage.getItem('userCfg')||'{}');
   const LIMIT   = cfg.microLen || 6;
