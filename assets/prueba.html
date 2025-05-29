@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown + LaTeX (con placeholders)</title>
+
+  <!-- marked CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- MathJax CDN -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true,
+        packages: {'[+]': ['ams', 'mhchem']}
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body style="font-family: sans-serif; line-height: 1.6;">
+  <div id="output" style="padding: 1rem;"></div>
+
+  <script>
+    const jsonData = {
+  content: `# Fórmulas científicas con LaTeX
+
+Ecuación en línea: \\(E = mc^2\\)
+
+Fórmula destacada:
+
+\\[
+\\int_{a}^{b} x^2 dx = \\left. \\frac{x^3}{3} \\right|_{a}^{b}
+\\]
+
+Sistema de ecuaciones:
+
+\\begin{align}
+2x + 3y &= 7 \\\\
+x - y &= 1
+\\end{align}
+
+Notación química: \\(\\ce{H2O}\\) y \\(\\ce{CO2}\\)`
+};
+
+    // Paso 1: Detectar y guardar las fórmulas LaTeX (incluso multilínea)
+const latexMatches = [];
+const placeholderContent = jsonData.content.replace(
+  /(\\\(.+?\\\)|\\\[[\s\S]+?\\\]|\\begin\{[\s\S]+?\\end\{[a-z]+\})/g,
+  (match) => {
+    latexMatches.push(match);
+    return `@@LATEX${latexMatches.length - 1}@@`;
+  }
+);
+
+// Paso 2: Convertir Markdown
+const htmlWithPlaceholders = marked.parse(placeholderContent);
+
+// Paso 3: Reinsertar las fórmulas
+const finalHTML = htmlWithPlaceholders.replace(/@@LATEX(\d+)@@/g, (_, i) => latexMatches[i]);
+
+// Mostrar y procesar con MathJax
+document.getElementById('output').innerHTML = finalHTML;
+MathJax.typesetPromise();
+  </script>
+</body>
+</html>

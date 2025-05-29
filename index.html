@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <title>Diagnóstico – Skills Trainer</title>
+
+  <!-- Tailwind y plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link rel="stylesheet" href="./style.css">
+   <script defer src="./nav.js"></script>  <!-- Primero nav.js -->
+   <script defer src="./config.js"></script> <!-- Luego config.js -->
+
+  <!-- Toastify (toasts) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <!--  RENDER RICO  ------------------------------------------------------->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- antes de richRender.js -->
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+
+  <link   rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.min.css">
+  <script>
+    window.MathJax = {
+      tex: {packages: {'[+]': ['mhchem']}}   // ← añade mhchem
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          id="MathJax-script"></script>
+
+  <!-- Heroicons -->
+  <script src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/dist/24/outline.js"></script>
+  <script type="module" src="./gamification.js"></script>
+  <svg style="display:none">
+  <symbol id="heroicons-outline-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 2h6m-3 3v2m-6 4h12a2 2 0 012 2v7a2 2 0 01-2 2H6a2 2 0 01-2-2v-7a2 2 0 012-2zm10 0v-2a4 4 0 10-8 0v2"/>
+    <circle cx="9" cy="13" r="1.5" fill="currentColor"/>
+    <circle cx="15" cy="13" r="1.5" fill="currentColor"/>
+  </symbol>
+</svg>
+</head>
+<body class="min-h-screen bg-slate-100 text-gray-800 flex flex-col">
+  <!-- La navegación se inserta automáticamente via nav.js -->
+
+  <!-- Contenido principal -->
+  <main class="flex-1">
+    <div id="homeArea" class="max-w-4xl mx-auto px-4 py-8"> <!-- ID agregado aquí -->
+
+      <!-- Tarjeta de bienvenida -->
+      <div class="bg-white rounded-xl shadow-sm p-6 mb-8 border border-slate-200">
+        <h1 class="text-2xl font-bold text-slate-800 mb-2">¡Bienvenido a Talim!</h1>
+        <p class="text-slate-600">Mejora tus conocimientos mediante repetición espaciada y diagnósticos inteligentes.</p>
+      </div>
+
+      <!-- Grid de opciones -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Diagnóstico principal -->
+        <div id="homeView" class="bg-white rounded-xl shadow-sm p-8 border border-slate-200">
+          <h2 class="text-xl font-semibold mb-4 text-center">Diagnóstico Global</h2>
+          <div class="space-y-8">
+            <button id="startDiag" class="w-full py-4 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-lg font-bold flex items-center justify-center shadow-lg hover:scale-[1.02] active:scale-95 transition">
+              Iniciar diagnóstico completo
+            </button>
+
+            <div class="text-center text-slate-600 space-y-4">
+              <p class="text-sm">
+                Recibe una mezcla optimizada de preguntas de <b>todas</b> las habilidades que necesiten repaso según tu progreso y la repetición espaciada.
+              </p>
+            </div>
+
+            <button id="startMicro" class="w-full py-4 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-lg font-bold flex items-center justify-center shadow-lg hover:scale-[1.02] active:scale-95 transition">
+              Sesión express
+            </button>
+          </div>
+          <p class="text-center text-sm text-slate-500 mt-6">
+            Sesión express: 6 preguntas clave para repaso rápido (3-5 min)
+          </p>
+        </div>
+
+        <!-- Panel de progreso -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+          <h2 class="text-xl font-semibold mb-4">Tu progreso</h2>
+
+          <!-- Dominadas -->
+          <div class="flex items-center justify-between">
+            <span>Habilidades dominadas</span>
+            <span id="homeMastered" class="font-semibold text-emerald-600">0</span>
+          </div>
+          <div class="h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div id="homeMasteredBar" class="h-full bg-emerald-500 w-0"></div>
+          </div>
+
+          <!-- Próximos repasos -->
+          <div class="flex items-center justify-between mt-6">
+            <span>Próximos repasos</span>
+            <span id="homeDue" class="font-semibold text-amber-600">0</span>
+          </div>
+          <div class="h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div id="homeDueBar" class="h-full bg-amber-500 w-0"></div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- /homeArea -->
+  </main>
+
+  <!-- Vista cuestionario (idéntica a skill.html) -->
+  <section id="quizView" class="hidden p-6 max-w-2xl mx-auto grow flex flex-col">
+    <h2 id="diagTitle" class="text-lg font-semibold mb-4 text-center"></h2>
+
+    <div id="questionBox" class="bg-white shadow rounded p-6">
+      <div id="progressDots" class="flex"></div>
+      <div id="qText" class="prose prose-slate mb-4"></div>
+      <form id="optionsForm" class="space-y-2 mb-4"></form>
+
+      <!-- Pistas -->
+      <div id="hintsBox" class="mt-4 hidden">
+        <h3 class="font-semibold mb-2">Pistas</h3>
+        <ul id="hintsList" class="list-disc list-inside space-y-1"></ul>
+      </div>
+
+      <!-- Explicación -->
+      <div id="explanationBox" class="mt-4 hidden">
+        <h3 class="font-semibold mb-2">Explicación</h3>
+        <div id="explanationText" class="prose prose-slate"></div>
+      </div>
+      <!-- Contenido relacionado ------------------------------------------------>
+        <div id="relatedBox" class="mt-4 hidden">
+        <h3 class="font-semibold mb-2">Contenido relacionado</h3>
+        <div id="relatedContent" class="prose prose-slate text-gray-700"></div>
+
+        <!-- enlace a biblio.html con querystring -->
+        <a id="relatedLink"
+            class="inline-flex items-center gap-1 text-indigo-600 hover:underline mt-2"
+            target="_blank">
+            Leer más en biblioteca
+            <svg class="h-4 w-4"><use href="#heroicons-outline-arrow-top-right-on-square"></use></svg>
+        </a>
+        </div>
+
+      <!-- Controles -->
+      <div class="flex gap-3 mt-6">
+        <button id="btnCheck" class="px-4 py-2 bg-indigo-600 text-white rounded">Check</button>
+        <button id="btnSkip"  class="px-4 py-2 bg-gray-300 text-gray-800 rounded">Skip</button>
+        <button id="btnNext"  class="hidden px-4 py-2 bg-green-600 text-white rounded">Next</button>
+        <button id="btnDoneRead" class="hidden px-4 py-2 bg-indigo-600 text-white rounded">Marcar leído</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resumen final ----------------------------------------------------->
+  <section id="summaryView" class="hidden p-6">
+    <h2 class="text-xl font-semibold mb-4 text-center">Resumen</h2>
+    <table class="bg-white shadow rounded">
+      <thead>
+        <tr class="bg-slate-100">
+          <th>Habilidad</th><th class="text-center">Cambio</th>
+        </tr>
+      </thead>
+      <tbody id="summaryBody"></tbody>
+    </table>
+
+    <div class="text-center mt-6">
+      <button id="summaryClose"
+              class="px-4 py-2 bg-indigo-600 text-white rounded">Cerrar</button>
+    </div>
+  </section>
+
+  <!-- Lógica -->
+  <script type="module" src="./index.js"></script>
+  <script type="module" src="./assistant.js"></script>
+</body>
+</html>

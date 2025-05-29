@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <title>Configuración – Skills Trainer</title>
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./nav.js"></script>
+  <script defer src="./config.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/dist/24/outline.js"></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-gray-800 flex flex-col">
+
+  <!-- La navegación se inserta automáticamente via nav.js -->
+
+  <main class="flex-1">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <!-- Encabezado -->
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold text-slate-800">Configuración</h1>
+        <p class="text-slate-600 mt-1">Personaliza tu experiencia de aprendizaje</p>
+      </div>
+
+      <!-- Contenedor del formulario -->
+      <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+        <form id="cfgForm" class="space-y-8">
+          <!-- ──────── Perfil ──────── -->
+          <div id="profileSection" class="space-y-6">
+            <h2 class="text-lg font-semibold text-slate-800 border-b pb-2">Perfil</h2>
+
+            <!-- MODO VISTA -------------------------------------------------->
+            <div id="profileDisplay" class="flex items-center gap-4">
+              <img id="profileAvatar"
+                  src="./assets/avatar-default.png"
+                  class="w-16 h-16 rounded-full object-cover border" alt="avatar">
+              <span id="profileName" class="text-lg font-semibold flex-1"></span>
+
+              <button id="editProfileBtn" type="button"
+                    class="text-slate-500 hover:text-indigo-600">
+              <!--  Heroicons pencil-square  -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+                  fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16.862 3.487a2.25 2.25 0 013.182 3.182L7.5 19.213
+                        3 21l1.787-4.5L16.862 3.487z"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19.5 13.5V6.75M19.5 6.75h-6.75"/>
+              </svg>
+            </button>
+            </div>
+
+            <!-- MODO EDICIÓN ------------------------------------------------>
+            <div id="profileEdit" class="space-y-4 hidden">
+              <div>
+                <label class="block text-sm font-medium mb-1">Nombre</label>
+                <input id="uName" class="w-full px-4 py-2 rounded-lg border">
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1">URL del avatar</label>
+                <input id="uAvatar" type="url" class="w-full px-4 py-2 rounded-lg border">
+              </div>
+              <div class="flex gap-3 pt-1">
+                <button id="saveProfile"   type="button"
+                        class="px-4 py-2 bg-emerald-600 text-white rounded-lg">Guardar</button>
+                <button id="cancelProfile" type="button"
+                        class="px-4 py-2 bg-slate-200  text-slate-700 rounded-lg">Cancelar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuraciones de aprendizaje -->
+          <div class="space-y-6">
+            <h2 class="text-lg font-semibold text-slate-800 border-b pb-2">Aprendizaje</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Columna izquierda -->
+              <div class="space-y-6">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-2">Máx. preguntas/día</label>
+                  <input id="diagMax" type="number" min="5" max="200" 
+                         class="w-full px-4 py-2 rounded-lg border border-slate-300">
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-2">% Pool práctica</label>
+                  <input id="pracPct" type="number" min="1" max="100" 
+                         class="w-full px-4 py-2 rounded-lg border border-slate-300">
+                </div>
+              </div>
+
+              <!-- Columna derecha -->
+              <div class="space-y-6">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-2">Nivel de severidad</label>
+                  <input id="severity" type="number" min="1" max="3" 
+                         class="w-full px-4 py-2 rounded-lg border border-slate-300">
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-2">Límite diario</label>
+                  <input id="dailyLimit" type="number" min="10" max="100"
+                         class="w-full px-4 py-2 rounded-lg border border-slate-300">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controles de datos -->
+          <div class="space-y-6">
+            <h2 class="text-lg font-semibold text-slate-800 border-b pb-2">Datos</h2>
+            <div class="flex gap-4">
+              <button id="expBtn" type="button" 
+                      class="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition-colors flex items-center gap-2">
+                <svg class="w-5 h-5"><use href="#heroicons-outline-arrow-down-tray"></use></svg>
+                Exportar datos
+              </button>
+              
+              <label class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors cursor-pointer flex items-center gap-2">
+                <svg class="w-5 h-5"><use href="#heroicons-outline-arrow-up-tray"></use></svg>
+                Importar datos
+                <input id="impFile" type="file" accept="application/json" hidden>
+              </label>
+            </div>
+          </div>
+
+          <!-- Botón guardar -->
+          <div class="border-t pt-6">
+            <button class="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+              Guardar cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+
+<script type="module">
+import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@7/+esm';
+const db  = await openDB('skills-trainer', 1);
+const $   = id => document.getElementById(id);
+const toast = (m, ok = true) =>
+  Toastify({ text:m, duration:2500, gravity:'top',
+             className: ok ? 'bg-emerald-600' : 'bg-rose-600' }).showToast();
+
+/* ---------------- EXPORTAR TODO ---------------- */
+async function exportData () {
+  const progress = await db.getAll('progress');
+  const payload  = {
+    ver      : 1,
+    saved    : Date.now(),
+    progress,
+    ls : {                                   // localStorage relevante
+      userCfg         : localStorage.getItem('userCfg')          || null,
+      stats           : localStorage.getItem('stats')            || null,
+      lagoonQuestions : localStorage.getItem('lagoonQuestions')  || '0',
+      totalReviews    : localStorage.getItem('totalReviews')     || '0',
+      unlockedEvents  : localStorage.getItem('unlockedEvents')   || '[]'
+    }
+  };
+  const blob = new Blob([JSON.stringify(payload)], { type:'application/json' });
+  const a    = Object.assign(document.createElement('a'), {
+              href: URL.createObjectURL(blob), download:'skillsTrainerBackup.json'});
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('✔ Exportación completada');
+}
+
+/* ---------------- IMPORTAR  CON MERGE ---------------- */
+async function importData (file) {
+  if (!file) return;
+  let data;
+  try { data = JSON.parse(await file.text()); }
+  catch { toast('Archivo JSON inválido', false); return; }
+
+  if (!Array.isArray(data.progress)) {
+    toast('Estructura incorrecta', false); return;
+  }
+
+  /* 1· ajuste de fechas (conserva coherencia temporal) */
+  const delta = Date.now() - (data.saved || Date.now());
+  const STATES = ['Not started','Attempted','Familiar','Proficient','Mastered'];
+
+  const tx = db.transaction('progress', 'readwrite');
+  for (const rec of data.progress) {
+    rec.last = (rec.last || 0) + delta;    // “traslada” el timestamp
+    const current = await tx.store.get(rec.skillId);
+    let finalRec  = rec;
+
+    if (current) {                         // resolver conflictos
+      const sNew = STATES.indexOf(rec.state);
+      const sCur = STATES.indexOf(current.state);
+
+      /* Elegir el estado MÁS ALTO; si igual, elegir fecha más reciente */
+      if (sCur > sNew || (sCur === sNew && current.last > rec.last)) {
+        finalRec = current;
+      }
+    }
+    await tx.store.put(finalRec);
+  }
+  await tx.done;
+
+  /* 2· fusionar LocalStorage ------------------------------------ */
+  const ls = data.ls || {};
+
+  /* a) configuración y stats → se sobreescriben SOLO si no existen */
+  if (ls.userCfg && !localStorage.getItem('userCfg'))
+    localStorage.setItem('userCfg', ls.userCfg);
+
+  if (ls.stats) {
+    const cur = JSON.parse(localStorage.getItem('stats') || '{}');
+    const inc = JSON.parse(ls.stats);
+    localStorage.setItem('stats', JSON.stringify({ ...cur, ...inc }));
+  }
+
+  /* b) contadores numéricos → se suman */
+  const addNum = key => {
+    const cur = +localStorage.getItem(key) || 0;
+    const inc = +ls[key] || 0;
+    localStorage.setItem(key, cur + inc);
+  };
+  addNum('lagoonQuestions');
+  addNum('totalReviews');
+
+  /* c) logros desbloqueados → unión de sets                      */
+  if (ls.unlockedEvents) {
+    const cur = JSON.parse(localStorage.getItem('unlockedEvents') || '[]');
+    const inc = JSON.parse(ls.unlockedEvents);
+    const merged = [...new Set([...cur, ...inc])];
+    localStorage.setItem('unlockedEvents', JSON.stringify(merged));
+  }
+
+  toast('✔ Datos importados y fusionados');
+}
+
+/* ---------------- BINDINGS UI ---------------- */
+$('expBtn').onclick  = exportData;
+$('impFile').onchange = e => importData(e.target.files[0]);
+
+</script>
+</body></html>

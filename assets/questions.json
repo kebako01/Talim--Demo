@@ -1,0 +1,233 @@
+{
+  "branches": [
+    {
+      "name": "Matemáticas",
+      "skills": [
+        {
+          "name": "Álgebra",
+          "questions": [
+            { 
+              "id": "alg_001", "question": "¿Cuál es el resultado de 2x + 3 = 7?", 
+              "options": [
+                { "text": "x = 2", "correct": true }, 
+                { "text": "x = 3", "correct": false }, 
+                { "text": "x = 1", "correct": false }, 
+                { "text": "x = 0", "correct": false }
+              ], 
+              "explanation": "Despejando x: 2x = 4 → x = 2.", 
+              "hints": ["Intenta despejar x aislándola.", "Resta 3 de ambos lados de la ecuación."], 
+              "difficulty": 3
+            },
+            { 
+              "id": "alg_002", "question": "¿Cuál es el valor de y en 3y - 2 = 7?", 
+              "options": [
+                { "text": "y = 3", "correct": false }, 
+                { "text": "y = 4", "correct": true }, 
+                { "text": "y = 5", "correct": false }, 
+                { "text": "y = 2", "correct": false }
+              ], 
+              "explanation": "Despejando y: 3y = 9 → y = 4.", 
+              "hints": ["Suma 2 en ambos lados de la ecuación.", "Divide el resultado entre 3."], 
+              "difficulty": 2
+            },
+            { 
+              "id": "alg_003", "question": "¿Cuál es la solución de x² - 5x + 6 = 0?", 
+              "options": [
+                { "text": "x = 2 y x = 3", "correct": true }, 
+                { "text": "x = 1 y x = 6", "correct": false }, 
+                { "text": "x = -2 y x = -3", "correct": false }, 
+                { "text": "x = 0 y x = 5", "correct": false }
+              ], 
+              "explanation": "Factorizando: (x-2)(x-3) = 0 → x = 2 y x = 3.", 
+              "hints": ["Intenta factorizar el trinomio.", "Busca dos números que multipliquen 6 y sumen -5."], 
+              "difficulty": 4
+            },
+            { 
+              "id": "alg_004", "question": "¿Qué valor de z satisface 4z - 5 = 11?", 
+              "options": [
+                { "text": "z = 4", "correct": true }, 
+                { "text": "z = 3", "correct": false }, 
+                { "text": "z = 5", "correct": false }, 
+                { "text": "z = 6", "correct": false }
+              ], 
+              "explanation": "Despejando z: 4z = 16 → z = 4.", 
+              "hints": ["Aísla la variable sumando 5 a ambos lados.", "Divide entre 4 el resultado."], 
+              "difficulty": 2
+            }
+          ]
+        },
+        {
+          "name": "Geometría",
+          "questions": [
+            { 
+              "id": "geo_001", "question": "¿Cuál es el área de un triángulo de base 5 y altura 4?", 
+              "options": [
+                { "text": "20", "correct": false }, 
+                { "text": "10", "correct": true }, 
+                { "text": "15", "correct": false }, 
+                { "text": "25", "correct": false }
+              ], 
+              "explanation": "Área = (base × altura) / 2 = (5 × 4) / 2 = 10.", 
+              "hints": ["Recuerda la fórmula del área de un triángulo.", "Divide el producto de la base y la altura por 2."], 
+              "difficulty": 1
+            },
+            { 
+              "id": "geo_002", "question": "¿Cuál es el perímetro de un cuadrado de lado 6 cm?", 
+              "options": [
+                { "text": "24 cm", "correct": true }, 
+                { "text": "36 cm", "correct": false }, 
+                { "text": "12 cm", "correct": false }, 
+                { "text": "18 cm", "correct": false }
+              ], 
+              "explanation": "Perímetro = 4 × lado = 4 × 6 = 24 cm.", 
+              "hints": ["Suma los cuatro lados iguales.", "Multiplica el lado por 4."], 
+              "difficulty": 1
+            },
+            { 
+              "id": "geo_003", "question": "¿Cuántos lados tiene un heptágono?", 
+              "options": [
+                { "text": "7", "correct": true }, 
+                { "text": "6", "correct": false }, 
+                { "text": "8", "correct": false }, 
+                { "text": "5", "correct": false }
+              ], 
+              "explanation": "Hepta- significa siete en griego.", 
+              "hints": ["Prefijo 'hepta' corresponde a siete.", "Un hexágono tiene 6 lados."], 
+              "difficulty": 2
+            }
+          ]
+        },
+        {
+          "name": "Trigonometría",
+          "questions": [
+            { 
+              "id": "trig_001", "question": "¿Cuál es el seno de 90 grados?", 
+              "options": [
+                { "text": "1", "correct": true }, 
+                { "text": "0", "correct": false }, 
+                { "text": "0.5", "correct": false }, 
+                { "text": "√2/2", "correct": false }
+              ], 
+              "explanation": "En el círculo unitario, sen(90°) = 1.", 
+              "hints": ["Recuerda el valor en ángulos notables.", "Piensa en la posición en el plano cartesiano."], 
+              "difficulty": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ciencias",
+      "skills": [
+        {
+          "name": "Biología",
+          "questions": [
+            { 
+              "id": "bio_001", "question": "¿Cuál es la función principal de los glóbulos rojos?", 
+              "options": [
+                { "text": "Transportar oxígeno", "correct": true }, 
+                { "text": "Defender contra infecciones", "correct": false }, 
+                { "text": "Producir energía", "correct": false }, 
+                { "text": "Formar coágulos", "correct": false }
+              ], 
+              "explanation": "Los glóbulos rojos transportan oxígeno a través de la hemoglobina.", 
+              "hints": ["Piensa en su función en el sistema circulatorio.", "¿Qué proteína transporta oxígeno en la sangre?"], 
+              "difficulty": 3
+            },
+            { 
+              "id": "bio_002", "question": "¿Qué organelo es responsable de la fotosíntesis?", 
+              "options": [
+                { "text": "Cloroplasto", "correct": true }, 
+                { "text": "Mitocondria", "correct": false }, 
+                { "text": "Núcleo", "correct": false }, 
+                { "text": "Ribosoma", "correct": false }
+              ], 
+              "explanation": "Los cloroplastos contienen clorofila para realizar la fotosíntesis.", 
+              "hints": ["Relaciona con el pigmento verde de las plantas.", "No confundir con la respiración celular."], 
+              "difficulty": 4
+            }
+          ]
+        },
+        {
+          "name": "Física",
+          "questions": [
+            { 
+              "id": "fis_001", "question": "¿Cuál es la unidad de fuerza en el SI?", 
+              "options": [
+                { "text": "Newton", "correct": true }, 
+                { "text": "Joule", "correct": false }, 
+                { "text": "Pascal", "correct": false }, 
+                { "text": "Watt", "correct": false }
+              ], 
+              "explanation": "El newton (N) es la unidad de fuerza en el Sistema Internacional.", 
+              "hints": ["Nombre derivado del científico Isaac Newton.", "Fuerza = masa × aceleración."], 
+              "difficulty": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TEST Render RICO",
+      "skills": [
+        {
+          "name": "Pruebas de Formato",
+          "questions": [
+            {
+              "id": "render_001",
+              "question": "¿Cómo se renderiza este bloque de código?\n```javascript\nconst factorial = (n) => n <= 1 ? 1 : n * factorial(n-1);\n```",
+              "options": [
+                { "text": "Texto plano sin colores", "correct": false },
+                { "text": "Con resaltado de sintaxis JavaScript", "correct": true },
+                { "text": "Como ecuación matemática", "correct": false },
+                { "text": "Tabla con bordes", "correct": false }
+              ],
+              "explanation": "Debería verse con:\n- Numeración de líneas\n- Palabras clave en colores\n- Resaltado de funciones",
+              "hints": ["Requiere highlight.js", "El lenguaje se define tras los tildes invertidos"],
+              "difficulty": 2
+            },
+            {
+              "id": "render_002",
+              "question": "¿Qué muestra esta ecuación?\n\\[\n\\int_{0}^{\\pi} \\sin(x) dx = 2\n\\]",
+              "options": [
+                { "text": "Texto plano con símbolos", "correct": false },
+                { "text": "Ecuación matemática formateada", "correct": true },
+                { "text": "Diagrama SVG interactivo", "correct": false },
+                { "text": "Código Python", "correct": false }
+              ],
+              "explanation": "Debería renderizar:\n- Límites de integración\n- Símbolo π\n- Formato profesional",
+              "hints": ["Usa MathJax/LaTeX", "Los delimitadores son \\[ y \\]"],
+              "difficulty": 3
+            },
+            {
+              "id": "render_003",
+              "question": "¿Cómo se verá este texto?:\n**Negrita** | *Cursiva* | [Enlace](https://ejemplo.com)",
+              "options": [
+                { "text": "Texto plano con símbolos", "correct": false },
+                { "text": "Negrita, cursiva y enlace clickeable", "correct": true },
+                { "text": "Tabla de tres columnas", "correct": false },
+                { "text": "Bloque de código", "correct": false }
+              ],
+              "explanation": "Markdown básico debe convertir:\n- ** → negrita\n- * → cursiva\n- []() → hipervínculo",
+              "hints": ["Requiere marked.js", "Sintaxis estándar de Markdown"],
+              "difficulty": 1
+            },
+            {
+              "id": "render_004",
+              "question": "¿Qué elemento NO se renderizará correctamente?\n```html\n<div class=\"container\">\n  <p>Hola <!-- Comentario --></p>\n  <math><mi>x</mi></math>\n</div>```",
+              "options": [
+                { "text": "Resaltado HTML", "correct": false },
+                { "text": "Comentario HTML", "correct": false },
+                { "text": "Etiqueta MathML", "correct": true },
+                { "text": "Atributo class", "correct": false }
+              ],
+              "explanation": "MathML necesita MathJax para renderizarse. El resto es HTML estándar.",
+              "hints": ["¿Qué tecnología falta para ecuaciones?", "Los comentarios HTML son invisibles"],
+              "difficulty": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

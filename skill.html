@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <title>Habilidades – Skills Trainer</title>
+
+  <!-- Dependencias -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./config.js"></script>
+  <script defer src="./nav.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/dist/24/outline.js"></script>
+  <script type="module" src="./gamification.js"></script>
+
+  <!--  RENDER RICO  ------------------------------------------------------->
+  <!-- antes de richRender.js -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+
+
+<link   rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.min.css">
+<script>
+    window.MathJax = {
+      tex: {packages: {'[+]': ['mhchem']}}   // ← añade mhchem
+    };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        id="MathJax-script"></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-gray-800 flex flex-col">
+
+  <!-- Navegación generada por nav.js -->
+
+  <main class="flex-1">
+    <!-- ─── Leyenda de estados ─────────────────────────────────────── -->
+  <div id="legendStates"
+      class="mx-auto max-w-6xl px-6 py-4 mb-4 bg-white/60 backdrop-blur
+              rounded-lg shadow-sm flex flex-wrap justify-center gap-4
+              text-sm text-slate-700"></div>
+
+  <script type="module" src="./legend.js"></script>
+<!-- ────────────────────────────────────────────────────────────── -->
+    <!-- Vista de Ramas -->
+    <section id="branchView" class="p-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></section>
+
+    <!-- Vista de Habilidades -->
+    <section id="skillView" class="hidden p-6 max-w-6xl mx-auto">
+      <div class="mb-8">
+        <button id="backBranches" class="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors">
+          <svg class="w-5 h-5"><use href="#heroicons-outline-arrow-left"></use></svg>
+          <span class="font-medium">Volver a ramas</span>
+        </button>
+        <h2 id="skillBranchTitle" class="text-2xl font-bold text-slate-800 mt-4"></h2>
+      </div>
+      <div id="skillGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+    <!-- Vista de Cuestionario -->
+    <section id="quizView" class="hidden p-6 max-w-3xl mx-auto">
+      <div class="space-y-6">
+        <div class="flex items-center justify-between">
+          <button id="backSkills" class="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors">
+            <svg class="w-5 h-5"><use href="#heroicons-outline-arrow-left"></use></svg>
+            <span class="font-medium">Volver a habilidades</span>
+          </button>
+          <div id="progressDots" class="flex items-center gap-2"></div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
+          <h2 id="quizSkillTitle" class="text-xl font-bold text-slate-800 mb-6"></h2>
+          
+          <div id="questionBox" class="space-y-6">
+            <p id="qText" class="text-lg font-medium text-slate-700"></p>
+            <form id="optionsForm" class="space-y-3"></form>
+
+            <!-- Sección de Ayudas -->
+            <div class="space-y-6">
+              <div id="hintsBox" class="hidden">
+                <h3 class="font-semibold text-slate-700 mb-3">Pistas</h3>
+                <ul id="hintsList" class="space-y-2 text-slate-600"></ul>
+              </div>
+
+              <div id="explanationBox" class="hidden">
+                <h3 class="font-semibold text-slate-700 mb-3">Explicación</h3>
+                <div id="explanationText" class="prose prose-slate"></div>
+              </div>
+
+              <div id="relatedBox" class="hidden">
+                <div class="border-t pt-6 space-y-4">
+                  <h3 class="font-semibold text-slate-700">Contenido relacionado</h3>
+                  <div id="relatedContent" class="prose prose-slate text-slate-600"></div>
+                  <a id="relatedLink" class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors" target="_blank">
+                    <span>Leer más en biblioteca</span>
+                    <svg class="w-4 h-4"><use href="#heroicons-outline-arrow-top-right-on-square"></use></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="flex flex-wrap gap-3 pt-6">
+              <button id="btnCheck" class="px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                Verificar
+              </button>
+              <button id="btnSkip" class="px-5 py-2.5 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors">
+                Saltar
+              </button>
+              <button id="btnNext" class="hidden px-5 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+                Siguiente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resumen Final -->
+    <section id="summaryView" class="hidden p-6 max-w-3xl mx-auto">
+      <div class="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
+        <h2 class="text-xl font-bold text-slate-800 mb-6 text-center">Resumen de Progreso</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-slate-50">
+                <th class="text-left py-3 px-4 font-semibold text-slate-700">Habilidad</th>
+                <th class="text-center py-3 px-4 font-semibold text-slate-700">Progreso</th>
+              </tr>
+            </thead>
+            <tbody id="summaryBody" class="divide-y divide-slate-200"></tbody>
+          </table>
+        </div>
+        <div class="mt-6 text-center">
+          <button id="summaryClose" class="px-6 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+            Cerrar Resumen
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./skills.js"></script>
+  <script type="module" src="./assistant.js"></script>
+</body>
+</html>

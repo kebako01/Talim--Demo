@@ -1,0 +1,39 @@
+{
+  "events": [
+    {
+      "id": "divina_vulpes",
+      "name": "Capítulo del Zorro de los Diez Amaneceres",
+      "description": "Completa 10 días consecutivos de práctica.",
+      "criteria": { "streak_days": 10 },
+      "icon": "assets/icons/Divina_Vulpes_Chapter.png"
+    },
+    {
+      "id": "memories_flowing",
+      "name": "Capítulo de los Recuerdos que Fluyen en Cinco Llamas",
+      "description": "Domina 5 habilidades (estado «Mastered»).",
+      "criteria": { "mastered_skills": 5 },
+      "icon": "assets/icons/Memories_Flowing_With_Color_Chapter.png"
+    },
+    {
+      "id": "moonlight_merriment",
+      "name": "Capítulo del Festín Bajo la Luna del Recuerdo",
+      "description": "Acumula 50 repasos registrados.",
+      "criteria": { "total_reviews": 50 },
+      "icon": "assets/icons/Moonlight_Merriment_Chapter.png"
+    },
+    {
+      "id": "true_tales",
+      "name": "Capítulo de los Ecos de la Laguna Violeta",
+      "description": "Resuelve 10 preguntas de “Laguna de Memoria”.",
+      "criteria": { "lagoon_questions": 10 },
+      "icon": "assets/icons/True_Tales_of_the_Violet_Garden_Chapter.png"
+    },
+    {
+      "id": "enchanted_tales",
+      "name": "Capítulo del Festival de los Veinte Soles Encantados",
+      "description": "Mantén una racha de 20 días consecutivos.",
+      "criteria": { "streak_days": 20 },
+      "icon": "assets/icons/Enchanted_Tales_of_the_Mikawa_Festival_Chapter.png"
+    }
+  ]
+}

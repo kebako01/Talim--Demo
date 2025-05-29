@@ -1,0 +1,131 @@
+{
+  "branches": [
+    {
+      "name": "Matemáticas",
+      "skills": [
+        {
+          "name": "Álgebra",
+          "id": "alg",
+          "content": "El álgebra enseña a resolver ecuaciones mediante técnicas sistemáticas. Los estudiantes aprenden a despejar incógnitas usando operaciones inversas: sumar/restar para aislar términos y multiplicar/dividir para simplificar coeficientes. Se cubren métodos para factorizar expresiones, como trinomios cuadráticos, identificando patrones que permiten descomponerlos en binomios multiplicativos. Incluye aplicación práctica en problemas de equilibrio de ecuaciones y modelado matemático.",
+          "baseDifficulty": 3
+        },
+        {
+          "name": "Geometría",
+          "id": "geo",
+          "content": "Esta rama estudia formas y sus propiedades espaciales. Los temas principales incluyen cálculo de áreas (triángulos, cuadriláteros, círculos) y perímetros usando fórmulas específicas. Se analizan polígonos regulares e irregulares, con énfasis en sus ángulos y simetrías. Los estudiantes practican con figuras 2D y 3D, aprendiendo a relacionar dimensiones mediante teoremas como el de Pitágoras para triángulos rectángulos.",
+          "baseDifficulty": 2
+        },
+        {
+          "name": "Trigonometría",
+          "id": "trig",
+          "content": "Centrada en triángulos y funciones angulares, enseña las relaciones entre lados y ángulos. Se estudian las funciones básicas (seno, coseno, tangente) usando el círculo unitario como referencia. Los alumnos aprenden a aplicar identidades trigonométricas, resolver triángulos oblicuos con la ley de senos/cosenos, y graficar funciones periódicas. Incluye aplicaciones en navegación, física y sistemas de coordenadas.",
+          "baseDifficulty": 4
+        }
+      ]
+    },
+    {
+      "name": "Ciencias",
+      "skills": [
+        {
+          "name": "Biología",
+          "id": "bio",
+          "content": "Estudio de los seres vivos y sus procesos vitales. Cubre la estructura y función de células, incluyendo glóbulos rojos que transportan oxígeno mediante hemoglobina. Analiza la fotosíntesis en plantas, donde los cloroplastos convierten luz solar, agua y CO₂ en glucosa y oxígeno. Incluye temas de genética, ecosistemas y anatomía comparada.",
+          "baseDifficulty": 3
+        },
+        {
+          "name": "Física",
+          "id": "fis",
+          "content": "Ciencia que estudia la materia, energía y sus interacciones. Abarca las leyes de Newton (F=ma para fuerza, masa y aceleración), tipos de energía (cinética y potencial), y fuerzas fundamentales como gravedad y electromagnetismo. Incluye aplicaciones en mecánica, termodinámica y análisis de campos de fuerza.",
+          "baseDifficulty": 2
+        }
+      ]
+    },
+    {
+      "name": "Monetización",
+      "skills": [
+        {
+          "name": "Ventas (B2B, B2C, SaaS, etc.)",
+          "id": "vent",
+          "content": "Estrategias comerciales adaptadas a diferentes modelos:\n\n- **B2B**: Ventas entre empresas con ciclos largos, múltiples partes interesadas y contratos personalizados\n- **B2C**: Transacciones directas con consumidores finales usando marketing emocional y decisión rápida\n- **SaaS**: Modelo de suscripción con planes escalables, onboarding estructurado y métricas de retención\n\nTécnicas clave: Embudo de ventas (awareness > interés > decisión), propuestas de valor claras, pruebas gratuitas y testimonios verificables. Herramientas: CRM, análisis de CAC y LTV.",
+          "baseDifficulty": 3
+        },
+        {
+          "name": "Negociación y gestión de objeciones",
+          "id": "negoc",
+          "content": "Metodologías para superar resistencias:\n1. Escucha activa para identificar necesidades reales\n2. Técnica «Sí, y...» para construir sobre objeciones\n3. Argumentación basada en datos y casos de éxito\n4. Manejo de objeciones comunes (precio, urgencia, competencia)\n\nIncluye framework BATNA y creación de valor mutuo.",
+          "baseDifficulty": 4
+        },
+        {
+          "name": "Pricing & monetización",
+          "id": "price",
+          "content": "Modelos de precios efectivos:\n- **Freemium**: Versión básica gratis + funciones premium\n- **Suscripción**: Ingreso recurrente con diferentes niveles\n- **Pay-per-use**: Cobro por consumo\n\nTécnicas: Análisis de valor percibido, psicología de precios (ej: $9.99 vs $10), pruebas A/B de estructuras de precio.",
+          "baseDifficulty": 4
+        },
+        {
+          "name": "Uso de CRM (HubSpot, Notion, etc.)",
+          "id": "crm",
+          "content": "Gestión de relaciones con clientes mediante:\n- Seguimiento de leads y pipeline\n- Automatización de emails y recordatorios\n- Análisis de datos de ventas\n- Integración con otras herramientas (Zapier/Make)\n\nBest practices: Actualización constante de datos, segmentación de clientes, reportes personalizados.",
+          "baseDifficulty": 2
+        },
+        {
+          "name": "Retención de clientes y upselling",
+          "id": "reten",
+          "content": "Estrategias para fidelización:\n- Programas de lealtad y recompensas\n- Encuestas NPS y seguimiento de satisfacción\n- Upselling basado en uso/historial\n- Cross-selling de productos complementarios\n\nMétricas clave: Churn rate, CLV (Customer Lifetime Value), tasa de renovación.",
+          "baseDifficulty": 3
+        }
+      ]
+    },
+    {
+      "name": "Tecnología Web",
+      "skills": [
+        {
+          "name": "Markdown Avanzado",
+          "id": "markdown",
+          "content": "## Transformando texto plano en contenido estructurado\n\n**Elementos básicos:**\n- Listas con `-` o `*`\n- *Cursivas* y __negritas__\n- [Enlaces](https://ejemplo.com)\n\n```javascript\n// Bloque de código con sintaxis highlighting\nfunction ejemplo() {\n  console.log('¡Hola Mundo!');\n}\n```\n\nTablas complejas:\n\n| Plugin   | Función               |\n|----------|-----------------------|\n| Marked   | Conversión MD → HTML  |\n| MathJax  | Renderizado de fórmulas|\n| Highlight| Coloreado de código   |",
+          "baseDifficulty": 2
+        },
+        {
+          "name": "Ecuaciones Matemáticas",
+          "id": "latex",
+          "content": "# Fórmulas científicas con LaTeX\n\nEcuación en línea: \\(E = mc^2\\)\n\nFórmula destacada:\n\\[\n\\int_{a}^{b} x^2 dx = \\left. \\frac{x^3}{3} \\right|_{a}^{b}\n\\]\n\nSistema de ecuaciones:\n\\begin{align}\n2x + 3y &= 7 \\\\\nx - y &= 1\n\\end{align}\n\nNotación química:\n\\(\\ce{H2O}\\) y \\(\\ce{CO2}\\)",
+          "baseDifficulty": 3
+        },
+        {
+          "name": "Sintaxis de Código",
+          "id": "highlight",
+          "content": "## Coloreado de múltiples lenguajes\n\n```html\n<!-- Ejemplo HTML -->\n<div class=\"container\">\n  <h1 id=\"titulo\">Hola</h1>\n</div>\n```\n\n```css\n/* Estilos CSS */\n.container {\n  padding: 20px;\n  background: #f0f0f0;\n}\n```\n\n```python\n# Código Python\ndef factorial(n):\n    return 1 if n == 0 else n * factorial(n-1)\n```\n\n```sql\n-- Consulta SQL\nSELECT users.name, orders.total \nFROM users\nJOIN orders ON users.id = orders.user_id;\n```",
+          "baseDifficulty": 2
+        },
+        {
+          "name": "Integración Completa",
+          "id": "full-integration",
+          "content": "# Combinando todas las tecnologías\n\n**Flujo de trabajo:**\n1. Escribir contenido en Markdown\n2. Insertar fórmulas con sintaxis LaTeX\n3. Añadir bloques de código\n\nEjemplo combinado:\n\n```javascript\n// Cálculo de área circular\nconst area = (radio) => {\n  return Math.PI * Math.pow(radio, 2); // \\(A = \\pi r^2\\)\n};\n```\n\nFórmula relacionada:\n\\[\nA = \\int_0^{2\\pi} \\int_0^r r dr d\\theta\n\\]\n\n`Código inline`: `console.log(Math.sqrt(25))`",
+          "baseDifficulty": 4
+        }
+      ]
+    },
+    {
+      "name": "Calculus BC",
+      "skills": [
+        {
+          "name": "Manipulación algebraica avanzada",
+          "id": "alg-av",
+          "content": "## Técnicas esenciales para simplificación y resolución de ecuaciones\n\n### 1. **Simplificación de expresiones**\n```python\n# Ejemplo: Simplificar (3x² + 2x - 5) + (x³ - 4x² + 7)\nfrom sympy import simplify\n\nexpr = (3*x**2 + 2*x - 5) + (x**3 - 4*x**2 + 7)\nsimplified = simplify(expr)\nprint(simplified)  # x³ - x² + 2x + 2\n```\n**Proceso:**\n- Combina términos semejantes\n- Jerarquiza por grado descendente\n\n### 2. **Factorización polinómica**\n\\[\n6x^2 + 11x - 10 = (3x - 2)(2x + 5)\n\\]\n**Métodos comunes:**\n- Factor por agrupación\n- Fórmula cuadrática: \\(x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\\)\n\n### 3. **Ecuaciones racionales**\nResuelve:\n\\[\n\\frac{2x}{x-3} = \\frac{4}{x+1} + 1\n\\]\n**Pasos:**\n1. Encuentra MCD: \\((x-3)(x+1)\\)\n2. Elimina denominadores\n3. Resuelve cuadrática resultante\n\n### 4. **Ecuaciones exponenciales**\n\\[\n5^{2x-1} = 125\n\\]\n**Solución:**\n1. Expresar 125 como \\(5^3\\)\n2. Igualar exponentes: \\(2x - 1 = 3\\)\n3. Resolver: \\(x = 2\\)\n\n```javascript\n// Herramienta de verificación numérica\nfunction resolverExponencial(base, exponente, resultado) {\n  return Math.log(resultado) / Math.log(base) === exponente;\n}\nconsole.log(resolverExponencial(5, 3, 125)); // true\n```",
+          "baseDifficulty": 4
+        },
+        {
+          "name": "Cálculo Diferencial",
+          "id": "dif",
+          "content": "## Fundamentos de derivación\n\n### Derivadas básicas:\n\\[\n\\frac{d}{dx}[x^n] = nx^{n-1}\n\\]\n\n### Regla de la cadena:\n\\[\n\\frac{d}{dx}f(g(x)) = f'(g(x)) \\cdot g'(x)\n\\]\n\n```python\n# Derivación simbólica con SymPy\nfrom sympy import diff, symbols\n\nx = symbols('x')\nf = (3*x**2 + 2)**5\ndf = diff(f, x)\nprint(df)  # 30*x*(3*x**2 + 2)**4\n```\n\n### Aplicaciones prácticas:\n1. Velocidad instantánea\n2. Optimización de funciones\n3. Tasas relacionadas\n\n**Ejemplo de límite:**\n\\[\n\\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}\n\\]",
+          "baseDifficulty": 5
+        },
+        {
+          "name": "Cálculo Integral",
+          "id": "int",
+          "content": "## Técnicas de integración\n\n### Integral indefinida:\n\\[\n\\int x^n dx = \\frac{x^{n+1}}{n+1} + C \\quad (n \\neq -1)\n\\]\n\n### Métodos avanzados:\n1. **Sustitución trigonométrica**\n\\[\n\\int \\frac{dx}{\\sqrt{a^2 - x^2}} = \\arcsin\\left(\\frac{x}{a}\\right) + C\n\\]\n\n2. **Integración por partes**\n\\[\n\\int u dv = uv - \\int v du\n\\]\n\n```javascript\n// Aproximación numérica (Regla de Simpson)\nfunction integrar(f, a, b, n=1000) {\n  const h = (b - a) / n;\n  let sum = f(a) + f(b);\n  \n  for (let i = 1; i < n; i++) {\n    const coeff = i % 2 === 0 ? 2 : 4;\n    sum += coeff * f(a + i * h);\n  }\n  return (h / 3) * sum;\n}\n```\n\n### Aplicaciones:\n- Cálculo de áreas\n- Volúmenes de revolución\n- Trabajo y energía",
+          "baseDifficulty": 5
+        }
+      ]
+    }
+  ]
+}

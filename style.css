@@ -1,0 +1,254 @@
+/* -----------------------------------------------------------------
+   Sobrescribir utilidades de Tailwind con variables CSS del tema
+   -----------------------------------------------------------------*/
+:root {
+  --bg        : #f8fafc;   /* slate-100 */
+  --fg        : #1e293b;   /* slate-800 */
+  --card      : #ffffff;
+  --primary   : #4f46e5;   /* indigo-600 */
+  --primary-f : #ffffff;
+}
+
+html[data-theme="dark"] {
+   --bg        : #0f172a;   /* slate-900 */
+   --fg        : #f1f5f9;   /* slate-100 */
+   --card      : #1e293b;   /* slate-800 */
+   --primary   : #818cf8;   /* indigo-400 */
+   --primary-f : #0f172a;
+ }
+
+html {
+  background-color: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.25s, color 0.25s;
+}
+
+body {
+  background-color: var(--bg) !important;
+  color: var(--fg) !important;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+/* Fondo general */
+.bg-slate-100, .bg-gray-100 { background-color: var(--bg)   !important; }
+.bg-white                   { background-color: var(--card) !important; }
+
+/* Texto genérico gris */
+.text-gray-800, .text-slate-800 { color: var(--fg) !important; }
+
+/* Colores primarios */
+.text-indigo-600 { color: var(--primary) !important; }
+.bg-indigo-600   {
+  background-color: var(--primary) !important;
+  color: var(--primary-f) !important;
+}
+
+/* Botón toggle (el JS lo inserta) */
+#themeToggle {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.25s;
+  background-color: rgb(0 0 0 /.05);
+}
+#themeToggle:hover {
+  transform: scale(1.1);
+}
+html[data-theme="dark"] #themeToggle {
+  background-color: rgb(255 255 255 /.1);
+}
+
+html[data-theme="pink"] #themeToggle {
+  background-color: rgb(225 29 72 /.1);
+}
+/* ───────── NAVBAR ───────── */
+header#globalNav{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+  background-color:var(--card);      /* tema claro/oscuro */
+  box-shadow:0 1px 4px rgb(0 0 0 /.05);
+  padding:0.5rem 1rem;
+  z-index:20;
+  height: 4rem; /* Altura fija */
+}
+
+/* Logo principal */
+#siteLogo {
+  height: 100%; /* Ocupa toda la altura */
+  padding: 0.25rem 0;
+  margin-right: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+#siteLogo img {
+  height: 3rem !important;
+  transition: transform 0.2s ease;
+  margin-right: 0.5rem;
+}
+#siteLogo:hover img {
+  transform: scale(1.05);
+}
+
+/* Elementos de navegación */
+header#globalNav a.nav{
+  display:flex;
+  align-items:center;
+  gap:.35rem;
+  color:var(--fg);
+  font-weight:500;
+  padding:.45rem .8rem;
+  border-radius:.5rem;
+  transition:background-color .15s,color .15s;
+}
+header#globalNav a.nav:hover       {background-color:rgb(0 0 0 /.05);}
+html[data-theme="dark"] header#globalNav a.nav:hover{
+  background-color:rgb(255 255 255 /.08);}
+header#globalNav a[aria-current="page"]{
+  background-color:var(--primary);
+  color:var(--primary-f);}
+
+/* Ajuste para otros elementos */
+header#globalNav > *:not(#siteLogo) {
+  margin-bottom: 2px; /* Alineación vertical */
+}
+
+header#globalNav #navSpacer {flex:1;}          /* empuja el toggle a la derecha *
+
+
+/* ───── Progress-Dots ───── */
+#progressDots{justify-content:center;gap:.4rem;margin-bottom:1.2rem;}
+.progress-dot{
+  width:.75rem;height:.75rem;border-radius:9999px;
+  background:var(--primary);opacity:.25;transition:opacity .25s,transform .25s;
+}
+.progress-dot.active{opacity:1;transform:scale(1.3);}
+.progress-dot.done  {opacity:.6;}
+
+
+/*  Estrella de recomendación  */
+.reco-star{
+  position:absolute;top:.4rem;right:.4rem;width:1.1rem;height:1.1rem;
+  pointer-events:none;               /* que no estorbe al click */
+  filter:drop-shadow(0 0 2px rgba(0,0,0,.25));
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(.9);}50%{transform:scale(1.15);} }
+
+
+/* ───── Summary table ───── */
+#summaryView{max-width:28rem;margin:4rem auto;}
+#summaryView table{width:100%;}
+#summaryView th,#summaryView td{padding:.4rem .2rem;text-align:left;}
+.summary-up   {color:rgb(34 197 94);}   /* green-500 */
+.summary-same {color:rgb(156 163 175);} /* gray-400 */
+.summary-down {color:rgb(239 68 68);}   /* red-500 */
+
+
+/* botón preview dentro de cards */
+button.preview{font-size:.65rem;padding:.15rem .4rem;}
+
+
+
+html[data-theme="pink"] {
+  --bg        : #fff1f2;   /* rose-50 */
+  --fg        : #881337;   /* rose-900 */
+  --card      : #ffffff;
+  --primary   : #e11d48;   /* rose-600 */
+  --primary-f : #ffffff;
+}
+
+/* Ajustes específicos para el tema rosado */
+html[data-theme="pink"] header#globalNav a.nav:hover {
+  background-color: rgb(225 29 72 /.08);
+}
+
+html[data-theme="pink"] .progress-dot {
+  background: #fda4af; /* rose-300 */
+}
+
+html[data-theme="pink"] .summary-up {
+  color: #e11d48; /* rose-600 */
+}
+
+
+/* mini-botón nav (hereda .nav) */
+#globalNav button#gamiMini{
+  font-size:1.15rem;line-height:1;
+  width:2.2rem;height:2.2rem;display:flex;align-items:center;justify-content:center;
+}
+/* Añade esto al final de style.css */
+#gamiPop {
+  right: -1rem !important;   /* Ajustar posición horizontal */
+  top: calc(100% + 0.5rem);  /* Distancia desde el botón */
+  min-width: 280px;          /* Ancho mínimo garantizado */
+  z-index: 1000;             /* Asegurar sobreposición */
+  max-height: 70vh;          /* Limitar altura */
+  overflow-y: auto;          /* Scroll si excede altura */
+}
+
+/* Asegurar contexto de posicionamiento */
+#globalNav button#gamiMini {
+  position: relative; /* Contexto para el popup absoluto */
+}
+
+/* Opcional: sombra más pronunciada */
+#gamiPop {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+              0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* style.css */
+.note{background:#fef08a;padding:0 .25rem;border-radius:.25rem;font-weight:500}
+
+
+/* ---------- Logo integrado ---------- */
+#siteLogo{
+  padding:.25rem .5rem;           /* tacto similar a los <a.nav> */
+  border-radius:.5rem;
+  color:var(--primary);
+  transition:background-color .18s, box-shadow .18s, transform .18s;
+}
+#siteLogo:hover{
+  background-color:rgb(0 0 0 /.05);
+  box-shadow:0 1px 2px rgb(0 0 0 /.08);
+  transform:scale(1.04);
+}
+html[data-theme="dark"] #siteLogo:hover{
+  background-color:rgb(255 255 255 /.08);
+}
+
+/* Ajusta la altura exacta para que alinee con los iconos */
+#siteLogo img{height:1.75rem;}
+
+/* --- Buscador global --- */
+#globalSearch input{
+  background-color:rgb(241 245 249);           /* slate-100 */
+}
+html[data-theme="dark"] #globalSearch input{
+  background-color:rgb(30 41 59);              /* slate-800 */
+  color:var(--fg);
+}
+html[data-theme="dark"] #globalSearch #searchDrop{
+  background-color:var(--card);
+  border-color:rgb(51 65 85);                  /* slate-700 */
+}
+html[data-theme="dark"] #legendStates img{
+  filter:brightness(1.2) contrast(1.1);
+}
+
+/* ───────── Mejorar contraste en modo oscuro ───────── */
+html[data-theme="dark"] #qText,
+html[data-theme="dark"] .prose,
+html[data-theme="dark"] .prose :where(*) ,
+html[data-theme="dark"] .text-slate-600,
+html[data-theme="dark"] .text-slate-700 {
+  color: var(--fg) !important;   /* usa el blanco definido para fg */
+}

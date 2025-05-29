@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Combiner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Combina archivos JSON</h1>
+        
+        <!-- Selector de tipo -->
+        <div class="mb-4 flex gap-4">
+            <button onclick="selectType('questions')" 
+                    class="type-btn px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600">
+                Questions.json
+            </button>
+            <button onclick="selectType('biblio')" 
+                    class="type-btn px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600">
+                Biblio.json
+            </button>
+        </div>
+
+        <!-- Área de entrada -->
+        <div class="mb-4">
+            <textarea id="jsonInput" 
+                      class="w-full h-64 p-4 border rounded-lg font-mono text-sm"
+                      placeholder="Pega tu JSON aquí..."></textarea>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="flex gap-4 mb-6">
+            <button onclick="processJson()" 
+                    class="px-6 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">
+                Combinar JSON
+            </button>
+            <button onclick="loadExample()" 
+                    class="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+                Cargar Ejemplo
+            </button>
+        </div>
+
+        <!-- Resultado/Errores -->
+        <div id="output" class="hidden p-4 bg-white rounded-lg border">
+            <pre class="text-sm overflow-auto max-h-96"><code id="outputContent"></code></pre>
+        </div>
+    </div>
+
+    <script>
+        let selectedType = 'questions';
+        let baseData = { branches: [] };
+
+        // Seleccionar tipo de JSON
+        function selectType(type) {
+            selectedType = type;
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-offset-2');
+            });
+            event.target.classList.add('ring-2', 'ring-offset-2');
+        }
+
+        // Procesar JSON
+        function processJson() {
+            try {
+                const input = JSON.parse(document.getElementById('jsonInput').value);
+                const merged = mergeJson(baseData, input);
+                baseData = merged;
+                
+                showOutput(JSON.stringify(merged, null, 2));
+            } catch (error) {
+                showOutput(`Error: ${error.message}`, true);
+            }
+        }
+
+        // Función de combinación
+        function mergeJson(base, newData) {
+            // Lógica de combinación recursiva
+            const mergeDeep = (target, source) => {
+                if (typeof target !== 'object' || typeof source !== 'object') return source;
+                
+                for (const key in source) {
+                    if (Array.isArray(source[key])) {
+                        target[key] = target[key] || [];
+                        source[key].forEach((item, index) => {
+                            target[key][index] = mergeDeep(target[key][index] || {}, item);
+                        });
+                    } else if (typeof source[key] === 'object') {
+                        target[key] = mergeDeep(target[key] || {}, source[key]);
+                    } else {
+                        target[key] = source[key];
+                    }
+                }
+                return target;
+            };
+
+            return mergeDeep(JSON.parse(JSON.stringify(base)), newData);
+        }
+
+        // Mostrar resultados
+        function showOutput(content, isError = false) {
+            const outputDiv = document.getElementById('output');
+            const outputContent = document.getElementById('outputContent');
+            
+            outputDiv.classList.remove('hidden');
+            outputContent.textContent = content;
+            outputDiv.className = isError ? 
+                'p-4 bg-red-50 border border-red-200 rounded-lg' : 
+                'p-4 bg-white border border-gray-200 rounded-lg';
+        }
+
+        // Cargar ejemplo
+        function loadExample() {
+            const example = selectedType === 'questions' ? 
+                `{
+                    "branches": [
+                        {
+                            "name": "Matemáticas",
+                            "skills": [
+                                {
+                                    "name": "Álgebra",
+                                    "questions": [
+                                        {
+                                            "id": "alg_005",
+                                            "question": "Resuelve 2(x + 3) = 16",
+                                            "options": [
+                                                {"text": "x = 5", "correct": true},
+                                                {"text": "x = 3", "correct": false}
+                                            ],
+                                            "explanation": "Divide ambos lados por 2 primero",
+                                            "hints": ["Distribuye el 2", "Aísla la x"],
+                                            "difficulty": 3
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }` : 
+                `{
+                    "branches": [
+                        {
+                            "name": "Ciencias",
+                            "skills": [
+                                {
+                                    "name": "Física",
+                                    "id": "fis",
+                                    "content": "Nuevo contenido sobre termodinámica...",
+                                    "difficulty": 3
+                                }
+                            ]
+                        }
+                    ]
+                }`;
+
+            document.getElementById('jsonInput').value = example;
+        }
+    </script>
+</body>
+</html>

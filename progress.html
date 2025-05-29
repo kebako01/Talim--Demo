@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <title>Progreso – Skills Trainer</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./config.js"></script>
+  <script defer src="./nav.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+  <!-- Chart.js para tendencias -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-gray-800 flex flex-col">
+
+  <!-- La navegación se inserta automáticamente via nav.js -->
+
+  <main class="flex-1">
+    <div class="max-w-6xl mx-auto px-4 py-8 space-y-8">
+      <!-- Header -->
+      <div class="space-y-2">
+        <h1 class="text-3xl font-bold text-slate-800">Tu Progreso</h1>
+        <p class="text-slate-600">Seguimiento detallado de tu aprendizaje</p>
+      </div>
+
+      <!-- Grid principal -->
+      <div class="grid lg:grid-cols-3 gap-6">
+        <!-- Columna izquierda: Estadísticas rápidas -->
+        <div class="space-y-6">
+          <!-- Tarjeta Racha -->
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-medium text-slate-500">Racha actual</h3>
+                <p id="streakTxt" class="text-3xl font-bold text-amber-600 mt-1">0 🔥</p>
+              </div>
+              <svg class="w-12 h-12 text-amber-100" fill="currentColor">
+                <use href="#heroicons-outline-fire"></use>
+              </svg>
+            </div>
+            <p class="text-sm text-slate-500 mt-3">Días consecutivos practicando</p>
+          </div>
+
+          <!-- Tarjeta Resumen -->
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+            <h3 class="text-lg font-semibold mb-4">Resumen general</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-slate-600">Habilidades activas</span>
+                    <span id="progActive"   class="font-semibold">0</span>
+                </div>
+                <!-- Dominadas -------------------------------------------------->
+                    <div class="flex items-center justify-between">
+                    <span class="text-slate-600">Dominadas</span>
+                    <span id="progMastered" class="font-semibold text-emerald-600">0</span>
+                    </div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div id="progMasteredBar" class="h-full bg-emerald-500 w-0"></div>
+                    </div>
+
+                    <!-- Por repasar ----------------------------------------------->
+                    <div class="flex items-center justify-between mt-3">
+                    <span class="text-slate-600">Por repasar</span>
+                    <span id="progDue" class="font-semibold text-amber-600">0</span>
+                    </div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div id="progDueBar" class="h-full bg-amber-500 w-0"></div>
+                    </div>
+                </div>
+          </div>
+        </div>
+
+        <!-- Columna central: Gráfico mejorado -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-lg font-semibold">Tendencia de actividad</h2>
+              <div class="flex gap-2 text-sm">
+                <button class="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-xs">
+                  30 días
+                </button>
+                <button class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs">
+                  6 meses
+                </button>
+              </div>
+            </div>
+            <canvas id="trendChart" height="160"></canvas>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Habilidades en riesgo -->
+        <div class="lg:col-span-3">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+            <h2 class="text-lg font-semibold mb-4">Habilidades que necesitan atención</h2>
+            <ul id="riskList" class="space-y-3">
+              <!-- El script poblará esta lista -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Logros --------------------------------------------------------->
+        <div class="lg:col-span-3">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+            <h2 class="text-lg font-semibold mb-4">Logros</h2>
+
+            <!-- grid responsive: 2 col en sm, 3 en lg -->
+            <div id="eventContainer"
+                class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <!-- gamification.js inyecta aquí cada logro -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="./progress.js"></script>
+  <script type="module" src="./gamification.js"></script>
+  <script type="module" src="./assistant.js"></script>
+</body>
+</html>

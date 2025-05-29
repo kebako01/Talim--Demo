@@ -1,0 +1,27 @@
+<!--  RENDER RICO  ------------------------------------------------------->
+<script defer src="https://cdn.jsdelivr.net/npm/marked@4.2.12/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/lib/index.min.js"></script>
+<link   rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        id="MathJax-script"></script>
+
+        Revisa el JSON sólo para la notación química:
+la molécula tiene que estar DENTRO de un delimitador matemático, por ejemplo
+json
+
+ RENDER RICO -Mareket, highlightjs y
+mathjax
+
+
+   "Notación química: \\(\\ce{H2O}\\) y \\(\\ce{CO2}\\)"
+
+   <script defer src="https://cdn.jsdelivr.net/npm/marked@4.2.12/marked.min.js"></script>
+
+
+   En el render biblio.html algunas cosas se generan, y en otras falla otra cosa. |el parseado por marked;
+marked “come” los delimitadores $ $ y $$ $$, así que a MathJax sólo le llega texto plano › no hay nada que maquetar;
+\begin{align} sobrevive porque no empieza por \[ ni \(. En biblio.html se genera casi todo menos Ecuación en línea: (E = mc^2)
+Fórmula destacada: [ \int_{a}^{b} x^2 dx = \left. \frac{x^3}{3} \right|_{a}^{b} ]
+Sistema de ecuaciones: Si lo renderiza
+Notación química: (\ce{H2O}) y (\ce{CO2}) y Código inline: console.log(Math.sqrt(25)) -Puedes ser libre de probar alternativas, o algo diferente para que funcione
