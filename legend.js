@@ -12,7 +12,7 @@ export function injectLegend(where='#legendStates'){
   if (!box) return;
   box.innerHTML = STATES.map(([s,label])=>`
       <div class="flex items-center gap-2">
-         <img src="./assets/${s}.png" class="w-6 h-6 select-none" alt="${s}">
+         <img src="./assets/${ICON[s]}.png" class="w-6 h-6 select-none" alt="${s}">
          <span>${label}</span>
       </div>`).join('');
 }
