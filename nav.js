@@ -39,7 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ['index.html',    'Home',        'home'],
     ['skill.html',    'Habilidades', 'rectangle-stack'],
     ['biblio.html',   'Biblioteca',  'book-open'],
-    ['progress.html', 'Progreso',    'chart-bar']
+    ['progress.html', 'Progreso',    'chart-bar'],
+    ['future.html', 'Futuro', 'light-bulb'],
+
   ];
   links.forEach(([href, txt, icon]) => {
     const a = document.createElement('a');

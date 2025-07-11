@@ -447,7 +447,9 @@ async function updateProgress (firstTryCorrect) {
   }
 
   /* estadísticas … (sin cambios) ---------------------------------- */
-  const keyStats = `${key}|diff${q.difficulty}`;
+  const curQ      = queue[qPtr].q;                 // puede ser undefined en ‘read’
+  const diff      = curQ?.difficulty ?? 3;
+  const keyStats  = `${key}|diff${diff}`;
   const st = JSON.parse(localStorage.getItem('stats')||'{}');
   const o  = st[keyStats] || { seen:0, hits:0 };
   o.seen++; if (firstTryCorrect) o.hits++;

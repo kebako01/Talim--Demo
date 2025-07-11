@@ -495,8 +495,10 @@ async function updateState (firstTryCorrect) {
       };
 
   const poolN = currentSkill.questions.length;
-  const { up, down, minInt } = thresholds(poolN);   // ← NUEVO
+  const { up, down, minInt } = thresholds(poolN);
 
+  /* ───── Índice de estado ───── */
+  let idx = STATES.indexOf(rec.state);            
   /* ───── Reaprendizaje: contador de fallos ───── */
   if (firstTryCorrect) {
     rec.streak++;
@@ -509,15 +511,13 @@ async function updateState (firstTryCorrect) {
     idx = Math.max(idx - down, 1);       // ← bajada flexible
   }
 
-  const keyStats = `${key}|diff${q.difficulty}`;
+  const diff      = queue[qIdx].difficulty ?? 3;
+  const keyStats  = `${key}|diff${diff}`;
   const st = JSON.parse(localStorage.getItem('stats')||'{}');
   const o  = st[keyStats] || { seen:0, hits:0 };
   o.seen++; if (firstTryCorrect) o.hits++;
   st[keyStats] = o;
   localStorage.setItem('stats', JSON.stringify(st));
-
-  /* ───── Ajuste de estado ───── */
-  let idx = STATES.indexOf(rec.state);
 
   if (firstTryCorrect) {
     rec.streak++;

@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuras Características - Talim</title>
+    
+    <!-- Dependencias de la app -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="./config.js"></script>
+    <script defer src="./nav.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4338ca;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: #6366f1;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Timeline Container */
+        .timeline-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+            border-color: #c7d2fe;
+            transform: translateY(-2px);
+        }
+
+        .feature-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .quarter-badge {
+            background: #6366f1;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .feature-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .feature-text {
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .feature-text p {
+            margin-bottom: 1rem;
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.813rem;
+            font-weight: 500;
+        }
+
+        /* Image Gallery */
+        .image-showcase {
+            position: relative;
+            background: #f8fafc;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            height: 300px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .image-showcase img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-showcase:hover img {
+            transform: scale(1.02);
+        }
+
+        .image-count {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.813rem;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Lightbox más simple */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: calc(90vh - 4rem);
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Navigation más sutil */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.25rem;
+        }
+
+        .nav-btn:hover {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+
+        .nav-btn.prev {
+            left: -60px;
+        }
+
+        .nav-btn.next {
+            right: -60px;
+        }
+
+        /* Dots más simples */
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dot.active {
+            background: #6366f1;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: white;
+            border: none;
+            color: #475569;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .close-btn:hover {
+            background: #6366f1;
+            color: white;
+        }
+
+        /* Timeline line */
+        .timeline-line {
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #6366f1, #c7d2fe);
+        }
+
+        .timeline-wrapper {
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 31px;
+            top: 3rem;
+            width: 20px;
+            height: 20px;
+            background: #6366f1;
+            border-radius: 50%;
+            border: 4px solid #f8fafc;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .feature-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .timeline-wrapper {
+                padding-left: 40px;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 11px;
+            }
+
+            .nav-btn.prev {
+                left: 10px;
+            }
+
+            .nav-btn.next {
+                right: 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Estilos para la nueva sección */
+        .current-improvements {
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .improvements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .improvement-card {
+            background: #f8fafc;
+            border: 2px solid #e0e7ff;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .improvement-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+            border-color: #6366f1;
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+            border-color: #6366f1;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .before-after {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .before, .after {
+            padding: 0.75rem;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .before {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .after {
+            background: #dcfce7;
+            border-left: 4px solid #22c55e;
+        }
+
+        .label {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #475569;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .before p, .after p {
+            margin: 0;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+
+        .impact-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #6366f1;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .structure-info {
+            background: #1e293b;
+            color: #94a3b8;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: #22c55e;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .improvements-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .improvement-card {
+                padding: 1.5rem;
+            }
+
+            .card-icon {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animación de entrada */
+        .improvement-card {
+            opacity: 0;
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        .improvement-card:nth-child(1) { animation-delay: 0.1s; }
+        .improvement-card:nth-child(2) { animation-delay: 0.2s; }
+        .improvement-card:nth-child(3) { animation-delay: 0.3s; }
+        .improvement-card:nth-child(4) { animation-delay: 0.4s; }
+        .improvement-card:nth-child(5) { animation-delay: 0.5s; }
+        .improvement-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+         /* ODS Impact Section Styles */
+        .ods-impact-section {
+            background: linear-gradient(to bottom, #ffffff, #f0f4ff);
+            border-top: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ods-impact-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+            animation: pulse 20s ease-in-out infinite;
+        }
+
+        .impact-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+            border-color: #c7d2fe;
+        }
+
+        .stat-card.highlight {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+            border-color: #6366f1;
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #4338ca;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-impact {
+            font-size: 0.875rem;
+            color: #475569;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-impact strong {
+            color: #1e293b;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Impact Features Grid */
+        .impact-features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .impact-feature {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            transition: all 0.3s ease;
+        }
+
+        .impact-feature:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+        }
+
+        .impact-header {
+            background: linear-gradient(135deg, #6366f1, #4338ca);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .meta-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-header h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .impact-body {
+            padding: 1.5rem;
+        }
+
+        .solution-box {
+            background: #f8fafc;
+            border-left: 4px solid #6366f1;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1rem;
+        }
+
+        .solution-box p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .solution-icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        /* Projected Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-4px);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #4338ca);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-detail {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .impact-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+             .impact-features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .metric-value {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        .stat-card, .impact-feature, .metric-card {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .impact-feature:nth-child(1) { animation-delay: 0.1s; }
+        .impact-feature:nth-child(2) { animation-delay: 0.2s; }
+        .impact-feature:nth-child(3) { animation-delay: 0.3s; }
+        .impact-feature:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tabla de Contenidos */
+        #toc {
+            transition: all 0.3s ease;
+        }
+
+        .toc-link {
+            color: #475569;
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            margin-left: -2px;
+        }
+
+        .toc-link:hover {
+            color: #4338ca;
+            border-left-color: #e0e7ff;
+        }
+
+        .toc-link.active {
+            color: #4338ca;
+            background-color: #e0e7ff;
+            border-left-color: #4338ca;
+            font-weight: 600;
+        }
+
+        /* Botón móvil para mostrar TOC */
+        .toc-mobile-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #6366f1;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            cursor: pointer;
+            z-index: 40;
+        }
+
+        @media (min-width: 1024px) {
+            .toc-mobile-toggle {
+                display: none;
+            }
+        }
+
+        /* TOC colapsado */
+        #toc.collapsed {
+            width: auto !important;
+        }
+
+        #toc.collapsed #tocContent {
+            display: none;
+        }
+
+        #toc.collapsed .toc-header {
+            border-bottom: none;
+        }
+
+        /* Animación suave para el toggle */
+        #tocToggle svg {
+            transition: transform 0.3s ease;
+        }
+
+        /* Estilos para las fuentes */
+        .stat-card p.text-xs {
+            font-style: italic;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        #toc {
+            pointer-events: none;
+        }
+
+        #toc > div {
+            pointer-events: auto;
+        }
+
+        /* Asegurar que los enlaces sean clickeables */
+        .ods-impact-section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ods-impact-section a {
+            position: relative;
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- La navbar se genera automáticamente desde nav.js -->
+
+    <main class="flex-1">
+        <!-- Tabla de Contenidos (TOC) con toggle -->
+        <nav id="toc" class="hidden lg:block fixed right-4 top-24 w-64 max-h-[calc(100vh-8rem)] overflow-y-auto z-30 transition-all duration-300">
+            <div class="bg-white/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200">
+                <!-- Header con botón toggle -->
+                <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                    <h3 class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        En esta página
+                    </h3>
+                    <button id="tocToggle" class="p-1 rounded hover:bg-gray-100 transition-colors">
+                        <svg class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Contenido colapsable -->
+                <div id="tocContent" class="p-4">
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#hero" class="toc-link block py-1.5 px-3 rounded hover:bg-indigo-50 transition-colors">🚀 Introducción</a></li>
+                        <li><a href="#transformacion" class="toc-link block py-1.5 px-3 rounded hover:bg-indigo-50 transition-colors">🔄 Transformación en Curso</a></li>
+                        <li><a href="#roadmap" class="toc-link block py-1.5 px-3 rounded hover:bg-indigo-50 transition-colors">📅 Roadmap 2025-26</a></li>
+                        <li class="ml-4">
+                            <ul class="space-y-1 mt-1">
+                                <li><a href="#agenda" class="toc-link text-xs block py-1 px-3 rounded hover:bg-indigo-50 transition-colors">📅 Agenda Inteligente</a></li>
+                                <li><a href="#sesiones" class="toc-link text-xs block py-1 px-3 rounded hover:bg-indigo-50 transition-colors">🎯 Sesiones Adaptativas</a></li>
+                                <li><a href="#cognitivo" class="toc-link text-xs block py-1 px-3 rounded hover:bg-indigo-50 transition-colors">🧠 Actividades Cognitivas</a></li>
+                                <li><a href="#laboratorio" class="toc-link text-xs block py-1 px-3 rounded hover:bg-indigo-50 transition-colors">🔬 Laboratorio Mental</a></li>
+                                <li><a href="#biblioteca" class="toc-link text-xs block py-1 px-3 rounded hover:bg-indigo-50 transition-colors">📚 Biblioteca Abierta</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#ods-impact" class="toc-link block py-1.5 px-3 rounded hover:bg-indigo-50 transition-colors">🌍 Impacto ODS 4</a></li>
+                        <li class="ml-4">
+                            <ul class="space-y-1 mt-1">
+                                <li><a href="#estadisticas" class="toc-link text-xs block py-1 px-3 rounded hover:bg-indigo-50 transition-colors">📊 Estadísticas Globales</a></li>
+                                <li><a href="#metas" class="toc-link text-xs block py-1 px-3 rounded hover:bg-indigo-50 transition-colors">🎯 Metas ODS</a></li>
+                                <li><a href="#metricas" class="toc-link text-xs block py-1 px-3 rounded hover:bg-indigo-50 transition-colors">📈 Métricas Proyectadas</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="container mx-auto">
+                <div class="subtitle">🚀 Talim</div>
+                <h1>Roadmap 2025–26</h1>
+                <p>
+                    Próximas características de <strong>Talim</strong> para revolucionar 
+                    el aprendizaje adaptativo. Inspiradas en metodologías de expertos como 
+                    <em>Justin Sung</em> y la ciencia cognitiva moderna.
+                </p>
+            </div>
+        </section>
+
+        <!-- Current Improvements Section -->
+        <section class="current-improvements" id="transformacion">
+            <div class="container mx-auto px-4 py-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-indigo-700 mb-4">🔄 Transformación en Curso</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Estamos revolucionando la experiencia de aprendizaje con cambios fundamentales 
+                        que eliminan la pasividad y potencian el aprendizaje activo y personalizado.
+                    </p>
+                </div>
+
+                <!-- Grid de mejoras actuales -->
+                <div class="improvements-grid">
+                    
+                    <!-- 1. Diagnóstico Activo -->
+                    <div class="improvement-card">
+                        <div class="card-icon">🧠</div>
+                        <h3 class="card-title">Diagnóstico Global → Laboratorio Mental</h3>
+                        <div class="card-content">
+                            <div class="before-after">
+                                <div class="before">
+                                    <span class="label">Ahora:</span>
+                                    <p>Diagnóstico pasivo sin identificación de acciones concretas</p>
+                                </div>
+                                <div class="after">
+                                    <span class="label">A Futuro:</span>
+                                    <p>Acceso directo al <strong>Laboratorio Mental</strong>: Herramienta de Metacognición para Aprendizaje Autodirigido</p>
+                                </div>
+                            </div>
+                            <div class="impact-badge">Mayor autonomía</div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Sesiones de Estudio -->
+                    <div class="improvement-card">
+                        <div class="card-icon">⏱️</div>
+                        <h3 class="card-title">Práctica Individual → Sesiones Efectivas</h3>
+                        <div class="card-content">
+                            <div class="before-after">
+                                <div class="before">
+                                    <span class="label">Ahora:</span>
+                                    <p>Preguntas aisladas sin estructura temporal</p>
+                                </div>
+                                <div class="after">
+                                    <span class="label">A Futuro:</span>
+                                    <p>Sesiones con interfaz propia, optimizadas para <strong>active recall</strong> efectivo</p>
+                                </div>
+                            </div>
+                            <div class="impact-badge">Tiempo optimizado</div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Biblioteca Colaborativa -->
+                    <div class="improvement-card">
+                        <div class="card-icon">📚</div>
+                        <h3 class="card-title">Biblioteca Estática → Conocimiento Compartido</h3>
+                        <div class="card-content">
+                            <div class="before-after">
+                                <div class="before">
+                                    <span class="label">Ahora:</span>
+                                    <p>Contenido creado solo por el administrador</p>
+                                </div>
+                                <div class="after">
+                                    <span class="label">A Futuro:</span>
+                                    <p>Plataforma colaborativa para crear y compartir <strong>chunks</strong> de conocimiento</p>
+                                </div>
+                            </div>
+                            <div class="structure-info">
+                                <code>Curso → Lección → Chunks (1-2 ideas)</code>
+                            </div>
+                            <div class="impact-badge">Conocimiento distribuido</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Home como Agenda -->
+                    <div class="improvement-card">
+                        <div class="card-icon">📅</div>
+                        <h3 class="card-title">Home Genérico → Agenda Personal</h3>
+                        <div class="card-content">
+                            <div class="before-after">
+                                <div class="before">
+                                    <span class="label">Ahora:</span>
+                                    <p>Página de inicio con múltiples opciones</p>
+                                </div>
+                                <div class="after">
+                                    <span class="label">A Futuro:</span>
+                                    <p>Agenda inteligente que <strong>guía qué estudiar</strong> y simplifica el inicio</p>
+                                </div>
+                            </div>
+                            <div class="impact-badge">Claridad total</div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Algoritmo FSRS -->
+                    <div class="improvement-card highlight-card">
+                        <div class="card-icon">🎯</div>
+                        <h3 class="card-title">SM-2 → FSRS Adaptativo</h3>
+                        <div class="card-content">
+                            <div class="before-after">
+                                <div class="before">
+                                    <span class="label">Ahora:</span>
+                                    <p>Algoritmo SM-2 con adaptación limitada</p>
+                                </div>
+                                <div class="after">
+                                    <span class="label">A Futuro:</span>
+                                    <p><strong>FSRS</strong> con adaptabilidad individual por chunk y sesión</p>
+                                </div>
+                            </div>
+                            <div class="impact-badge">Personalización máxima</div>
+                        </div>
+                    </div>
+
+                    <!-- 6. Contenido Activo -->
+                    <div class="improvement-card highlight-card">
+                        <div class="card-icon">💭</div>
+                        <h3 class="card-title">Preguntas Pasivas → Reflexión Activa</h3>
+                        <div class="card-content">
+                            <div class="before-after">
+                                <div class="before">
+                                    <span class="label">Ahora:</span>
+                                    <p>Enfoque en preguntas de opción múltiple</p>
+                                </div>
+                                <div class="after">
+                                    <span class="label">A Futuro:</span>
+                                    <p>Contenido diverso enfocado en <strong>reflexión y pensamiento crítico</strong></p>
+                                </div>
+                            </div>
+                            <ul class="feature-list">
+                                <li>✓ Preguntas de reflexión</li>
+                                <li>✓ Actividades de síntesis</li>
+                                <li>✓ Opción múltiple con bajo peso</li>
+                            </ul>
+                            <div class="impact-badge">Aprendizaje profundo</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Timeline Section -->
+        <section class="timeline-container" id="roadmap">
+            <div class="timeline-wrapper">
+                <div class="timeline-line"></div>
+                
+                <!-- Feature 1: Agenda Inteligente -->
+                <div class="feature-card" id="agenda">
+                    <div class="timeline-dot"></div>
+                    <div class="feature-header">
+                        <h2 class="feature-title">📅 Agenda Inteligente</h2>
+                        <span class="quarter-badge">Q1 2025</span>
+                    </div>
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <p>
+                                Un Agenda que guía al usuario sobre <strong>qué y cuándo repasar</strong>, 
+                                evitando el <em>over-studying</em>. Se integra con las sesiones 
+                                adaptativas y usa recordatorios inteligentes.
+                            </p>
+                            <div class="feature-tags">
+                                <span class="tag">Guía de estudio personalizada</span>
+                                <span class="tag">Recordatorios estratégicos</span>
+                                <span class="tag">Repetición espaciada</span>
+                            </div>
+
+                        </div>
+                        <div class="image-showcase" onclick="openLightbox(0)">
+                            <div class="image-count">1 imagen</div>
+                            <img src="./assets/future/a1.png" alt="Agenda inteligente">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2: Sesiones Adaptativas -->
+                <div class="feature-card" id="sesiones">
+                    <div class="timeline-dot"></div>
+                    <div class="feature-header">
+                        <h2 class="feature-title">🎯 Sesiones Adaptativas</h2>
+                        <span class="quarter-badge">Q2 2025</span>
+                    </div>
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <p>
+                                El estudio se agrupa en <strong>"sesiones"</strong> que respetan la carga mental 
+                                del estudiante y calculan los intervalos con <abbr title="Free Spaced Repetition Scheduler">FSRS</abbr>.
+                            </p>
+                            <div class="feature-tags">
+                                <span class="tag">Algoritmo FSRS</span>
+                                <span class="tag">Aprendizaje adaptativo</span>
+                                <span class="tag">Carga mental</span>
+                            </div>
+
+                        </div>
+                        <div class="image-showcase" onclick="openLightbox(1)">
+                            <div class="image-count">1 imagen</div>
+                            <img src="./assets/future/a2.png" alt="Sesiones adaptativas">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3: Actividades de Esfuerzo Cognitivo -->
+                <div class="feature-card" id="cognitivo">
+                    <div class="timeline-dot"></div>
+                    <div class="feature-header">
+                        <h2 class="feature-title">🧠 Actividades de Esfuerzo Cognitivo</h2>
+                        <span class="quarter-badge">Q3 2025</span>
+                    </div>
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <p>
+                                Abandonamos las preguntas de respuesta única y las sustituimos por 
+                                <strong>tareas que exigen reflexión activa</strong>, escritura y revisión 
+                                por pares.
+                            </p>
+                            <div class="feature-tags">
+                                <span class="tag">Aprendizaje activo</span>
+                                <span class="tag">Revisión por pares</span>
+                                <span class="tag">Pensamiento profundo</span>
+                            </div>
+
+                        </div>
+                        <div class="image-showcase" onclick="openLightbox(2)">
+                            <div class="image-count">5 imágenes</div>
+                            <img src="./assets/future/a3.1.png" alt="Actividades cognitivas">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 4: Laboratorio Mental -->
+                <div class="feature-card" id="laboratorio">
+                    <div class="timeline-dot"></div>
+                    <div class="feature-header">
+                        <h2 class="feature-title">🔬 Laboratorio Mental</h2>
+                        <span class="quarter-badge">Q4 2025</span>
+                    </div>
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <p>
+                                Un espacio para <strong>experimentar con el conocimiento</strong>, 
+                                auto-dirigir proyectos y registrar acciones derivadas de cada 
+                                aprendizaje.
+                            </p>
+                           <div class="feature-tags">
+                                <span class="tag">Aprendizaje por proyectos</span>
+                                <span class="tag">Experimentación</span>
+                                <span class="tag">Laboratorio de conocimiento</span>
+                            </div>
+
+                        </div>
+                        <div class="image-showcase" onclick="openLightbox(3)">
+                            <div class="image-count">1 imagen</div>
+                            <img src="./assets/future/a4.png" alt="Laboratorio mental">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5: Biblioteca Abierta -->
+                <div class="feature-card" id="biblioteca">
+                    <div class="timeline-dot"></div>
+                    <div class="feature-header">
+                        <h2 class="feature-title">📚 Nueva Biblioteca Abierta</h2>
+                        <span class="quarter-badge">Q1 2026</span>
+                    </div>
+                    <div class="feature-content">
+                        <div class="feature-text">
+                            <p>
+                                Replanteamos la biblioteca como una <strong>plataforma de contenido 
+                                abierto</strong>: cualquiera puede proponer y mejorar rutas 
+                                de aprendizaje.
+                            </p>
+                            <div class="feature-tags">
+                                <span class="tag">Contenido colaborativo</span>
+                                <span class="tag">Impulsado por la comunidad</span>
+                                <span class="tag">Rutas flexibles</span>
+                            </div>
+
+                        </div>
+                        <div class="image-showcase" onclick="openLightbox(4)">
+                            <div class="image-count">2 imágenes</div>
+                            <img src="./assets/future/a5.png" alt="Biblioteca abierta">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ODS Impact Section -->
+        <section class="ods-impact-section"  id="ods-impact">
+            <div class="container mx-auto px-4 py-20">
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center gap-3 mb-6">
+                        <img src="./assets/ods4.png" alt="ODS 4" class="h-16 w-16" 
+                            onerror="this.src='https://www.un.org/sustainabledevelopment/wp-content/uploads/2018/09/Goal-4.png'">
+                        <h2 class="text-3xl font-bold text-indigo-700">Impacto en ODS 4: Educación de Calidad</h2>
+                    </div>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto">
+                        Talim contribuye directamente a alcanzar las metas del Objetivo de Desarrollo Sostenible 4, 
+                        abordando las brechas educativas globales con tecnología adaptativa y accesible.
+                    </p>
+                </div>
+
+                <!-- Estadísticas de Impacto Global -->
+                <div class="impact-stats-grid" id="estadisticas">
+                    <div class="stat-card">
+                        <div class="stat-icon">🌍</div>
+                        <div class="stat-number">272M</div>
+                        <div class="stat-label">niños y jóvenes siguen fuera de la escuela</div>
+                        <div class="stat-impact">
+                        <strong>Talim responde:</strong> Funciona sin depender de colegios ni aulas físicas
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">
+                        Fuente: UNESCO‑UIS & GEM Report 2025
+                        </p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-number">754M</div>
+                        <div class="stat-label">adultos no saben leer ni escribir</div>
+                        <div class="stat-impact">
+                        <strong>Talim responde:</strong> Lecciones interactivas desde lo más básico
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">
+                        Fuente: UNESCO UIS 2025
+                        </p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-number">14%</div>
+                        <div class="stat-label">de las metas educativas van por buen camino</div>
+                        <div class="stat-impact">
+                        <strong>Talim responde:</strong> Acelera el aprendizaje básico y la alfabetización
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">
+                        Fuente: UNESCO GEM Report 2024/5
+                        </p>
+                    </div>
+
+                    <div class="stat-card highlight">
+                        <div class="stat-icon">💡</div>
+                        <div class="stat-number">$97B</div>
+                        <div class="stat-label">faltan cada año para financiar la educación global</div>
+                        <div class="stat-impact">
+                        <strong>Talim responde:</strong> Crece sin subir los costos: más personas con menos recursos
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">
+                        Fuente: UNESCO GEM Report 2024/5
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cómo las nuevas características impactan -->
+                <div class="features-impact mt-16">
+                    <h3 class="text-2xl font-bold text-center text-indigo-700 mb-10">
+                        Cómo nuestras innovaciones transforman la educación
+                    </h3>
+                    
+                    <div class="impact-features-grid" id="metas">
+                        <!-- Meta 4.1: Educación primaria y secundaria -->
+                        <div class="impact-feature">
+                            <div class="impact-header">
+                                <span class="meta-badge">Meta 4.1</span>
+                                <h4>Educación efectiva para todos</h4>
+                            </div>
+                            <div class="impact-body">
+                                <p class="mb-3">
+                                    <strong>Desafío global:</strong> Millones sin acceso a educación de calidad [[4]]
+                                </p>
+                                <div class="solution-box">
+                                    <p><span class="solution-icon">🎯</span> <strong>Sesiones Adaptativas:</strong> Personalización total del aprendizaje</p>
+                                    <p><span class="solution-icon">📅</span> <strong>Agenda Inteligente:</strong> Previene el abandono escolar con recordatorios estratégicos</p>
+                                    <p><span class="solution-icon">🧠</span> <strong>Laboratorio Mental:</strong> Aprendizaje práctico y significativo</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meta 4.3: Acceso igualitario -->
+                        <div class="impact-feature">
+                            <div class="impact-header">
+                                <span class="meta-badge">Meta 4.3</span>
+                                <h4>Acceso igualitario y asequible</h4>
+                            </div>
+                            <div class="impact-body">
+                                <p class="mb-3">
+                                    <strong>Desafío global:</strong> Desigualdades en el acceso a educación técnica y superior [[5]]
+                                </p>
+                                <div class="solution-box">
+                                    <p><span class="solution-icon">📚</span> <strong>Biblioteca Abierta:</strong> Contenido colaborativo sin restricciones</p>
+                                    <p><span class="solution-icon">🌐</span> <strong>100% Gratuito:</strong> Sin barreras económicas</p>
+                                    <p><span class="solution-icon">📱</span> <strong>Multiplataforma:</strong> Accesible desde cualquier dispositivo</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meta 4.4: Competencias para el empleo -->
+                        <div class="impact-feature">
+                            <div class="impact-header">
+                                <span class="meta-badge">Meta 4.4</span>
+                                <h4>Competencias relevantes</h4>
+                            </div>
+                            <div class="impact-body">
+                                <p class="mb-3">
+                                    <strong>Desafío global:</strong> Brecha entre educación y habilidades laborales [[6]]
+                                </p>
+                                <div class="solution-box">
+                                    <p><span class="solution-icon">💭</span> <strong>Actividades Cognitivas:</strong> Desarrolla pensamiento crítico</p>
+                                    <p><span class="solution-icon">🔬</span> <strong>Aprendizaje por Proyectos:</strong> Habilidades prácticas del mundo real</p>
+                                    <p><span class="solution-icon">🤝</span> <strong>Revisión por Pares:</strong> Competencias colaborativas</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Meta 4.5: Eliminar disparidades -->
+                        <div class="impact-feature">
+                            <div class="impact-header">
+                                <span class="meta-badge">Meta 4.5</span>
+                                <h4>Eliminar disparidades de género</h4>
+                            </div>
+                            <div class="impact-body">
+                                <p class="mb-3">
+                                    <strong>Desafío global:</strong> 129 millones de niñas siguen sin escolarizar y persisten brechas de género en STEM [[4]]
+                                </p>
+
+                                <div class="solution-box">
+                                    <p><span class="solution-icon">🎯</span> <strong>Algoritmo FSRS:</strong> Se adapta a diferentes ritmos sin prejuicios</p>
+                                    <p><span class="solution-icon">🏠</span> <strong>Aprendizaje Flexible:</strong> Compatible con responsabilidades familiares</p>
+                                    <p><span class="solution-icon">🌟</span> <strong>Sin Discriminación:</strong> Mismas oportunidades para todos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Métricas de Impacto Proyectadas -->
+                <div class="projected-impact mt-16">
+                    <h3 class="text-2xl font-bold text-center text-indigo-700 mb-10">
+                        Impacto Proyectado 2025-2030
+                    </h3>
+                    
+                    <div class="metrics-grid" id="metricas">
+                        <div class="metric-card">
+                            <div class="metric-value">100K+</div>
+                            <div class="metric-label">Usuarios activos mensuales</div>
+                            <div class="metric-detail">Crecimiento orgánico del 200% anual</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-value">15</div>
+                            <div class="metric-label">Países latinoamericanos</div>
+                            <div class="metric-detail">Expansión gradual desde Colombia</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-value">72%</div>
+                            <div class="metric-label">Tasa de retención a 6 meses</div>
+                            <div class="metric-detail">Vs. 45% promedio en e-learning [[1]]</div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-value">35%</div>
+                            <div class="metric-label">Mejora en velocidad de aprendizaje</div>
+                            <div class="metric-detail">Medido en evaluaciones estandarizadas</div>
+                        </div>
+                    </div>
+                    
+                    <!-- KPIs adicionales medibles -->
+                    <div class="mt-8 p-6 bg-indigo-50 rounded-lg">
+                        <h4 class="font-semibold text-indigo-900 mb-4">Indicadores Clave de Desempeño (KPIs)</h4>
+                        <ul class="space-y-2 text-sm text-indigo-800">
+                            <li>• <strong>Tiempo promedio de estudio:</strong> 45 min/día (meta: superar los 30 min promedio actual)</li>
+                            <li>• <strong>Tasa de finalización de cursos:</strong> 65% (vs. 15% promedio MOOCs)</li>
+                            <li>• <strong>NPS (Net Promoter Score):</strong> +50 puntos</li>
+                            <li>• <strong>Reducción de brecha de aprendizaje:</strong> 40% en competencias básicas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center mt-16">
+                    <p class="text-xl text-gray-700 mb-6">
+                        Juntos podemos garantizar educación inclusiva, equitativa y de calidad para todos [[1]]
+                    </p>
+                    <a href="https://www.un.org/sustainabledevelopment/es/education/" 
+                        target="_blank"
+                        class="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors text-lg font-semibold">
+                            Conoce más sobre el ODS 4
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="close-btn" onclick="closeLightbox()">×</button>
+            <button class="nav-btn prev" onclick="changeImage(-1)">‹</button>
+            <img class="lightbox-image" id="lightboxImage" src="" alt="">
+            <button class="nav-btn next" onclick="changeImage(1)">›</button>
+            <div class="dots-container" id="imageDots"></div>
+        </div>
+    </div>
+
+    <script>
+        // Image galleries for each feature
+        const featureGalleries = [
+            // Agenda Inteligente
+            ['./assets/future/a1.png'],
+            
+            // Sesiones Adaptativas
+            ['./assets/future/a2.png'],
+            
+            // Actividades de Esfuerzo Cognitivo
+            [
+                './assets/future/a3.1.png',
+                './assets/future/a3.2.png',
+                './assets/future/a3.3.png',
+                './assets/future/a3.4.png',
+                './assets/future/a3.5.png'
+            ],
+            
+            // Laboratorio Mental
+            ['./assets/future/a4.png'],
+            
+            // Biblioteca Abierta (solo 2 imágenes según el usuario)
+            [
+                './assets/future/a5.png',
+                './assets/future/a5.1.png'
+            ]
+        ];
+
+        let currentFeature = 0;
+        let currentImageIndex = 0;
+
+        function openLightbox(featureIndex) {
+            currentFeature = featureIndex;
+            currentImageIndex = 0;
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeImage(direction) {
+            const gallery = featureGalleries[currentFeature];
+            currentImageIndex = (currentImageIndex + direction + gallery.length) % gallery.length;
+            updateLightbox();
+        }
+
+        function updateLightbox() {
+            const gallery = featureGalleries[currentFeature];
+            const image = document.getElementById('lightboxImage');
+            const dotsContainer = document.getElementById('imageDots');
+            
+            // Update image
+            image.src = gallery[currentImageIndex];
+            
+            // Update navigation visibility
+            const prevBtn = document.querySelector('.nav-btn.prev');
+            const nextBtn = document.querySelector('.nav-btn.next');
+            
+            if (gallery.length <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            }
+            
+            // Update dots
+            dotsContainer.innerHTML = '';
+            if (gallery.length > 1) {
+                gallery.forEach((_, index) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'dot';
+                    if (index === currentImageIndex) {
+                        dot.classList.add('active');
+                    }
+                    dot.onclick = () => {
+                        currentImageIndex = index;
+                        updateLightbox();
+                    };
+                    dotsContainer.appendChild(dot);
+                });
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                const gallery = featureGalleries[currentFeature];
+                if (e.key === 'ArrowLeft' && gallery.length > 1) changeImage(-1);
+                if (e.key === 'ArrowRight' && gallery.length > 1) changeImage(1);
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.getElementById('lightbox').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById('lightbox').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const gallery = featureGalleries[currentFeature];
+            if (gallery.length > 1) {
+                if (touchEndX < touchStartX - 50) changeImage(1);
+                if (touchEndX > touchStartX + 50) changeImage(-1);
+            }
+        }
+
+        // Tabla de Contenidos - Navegación y Scroll Spy
+        document.addEventListener('DOMContentLoaded', () => {
+            const toc = document.getElementById('toc');
+            const tocLinks = document.querySelectorAll('.toc-link');
+            const sections = document.querySelectorAll('section[id], div[id]');
+            
+            // Smooth scroll al hacer click
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        const offset = 100; // Ajuste para la navbar
+                        const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Scroll spy - destacar sección actual
+            const observerOptions = {
+                rootMargin: '-20% 0px -70% 0px',
+                threshold: 0
+            };
+            
+            const observerCallback = (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Remover clase active de todos los links
+                        tocLinks.forEach(link => link.classList.remove('active'));
+                        
+                        // Agregar clase active al link correspondiente
+                        const activeLink = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                            
+                            // Si es un sub-item, también activar el padre
+                            const parentLi = activeLink.closest('li');
+                            if (parentLi && parentLi.parentElement.parentElement.tagName === 'LI') {
+                                const parentLink = parentLi.parentElement.parentElement.querySelector('.toc-link');
+                                if (parentLink) parentLink.classList.add('active');
+                            }
+                        }
+                    }
+                });
+            };
+            
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+            sections.forEach(section => observer.observe(section));
+            
+            // Agregar botón móvil para TOC
+            const tocMobileBtn = document.createElement('button');
+            tocMobileBtn.className = 'toc-mobile-toggle lg:hidden';
+            tocMobileBtn.innerHTML = `
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            `;
+            document.body.appendChild(tocMobileBtn);
+            
+            // Toggle TOC en móvil
+            let tocMobileOpen = false;
+            tocMobileBtn.addEventListener('click', () => {
+                tocMobileOpen = !tocMobileOpen;
+                
+                if (tocMobileOpen) {
+                    toc.classList.remove('hidden');
+                    toc.classList.add('block');
+                    toc.style.position = 'fixed';
+                    toc.style.left = '1rem';
+                    toc.style.right = '1rem';
+                    toc.style.width = 'auto';
+                    toc.style.maxWidth = '300px';
+                    toc.style.margin = '0 auto';
+                    
+                    // Overlay
+                    const overlay = document.createElement('div');
+                    overlay.id = 'toc-overlay';
+                    overlay.className = 'fixed inset-0 bg-black/50 z-20';
+                    overlay.addEventListener('click', () => {
+                        tocMobileBtn.click();
+                    });
+                    document.body.appendChild(overlay);
+                } else {
+                    toc.classList.add('hidden');
+                    toc.classList.remove('block');
+                    toc.removeAttribute('style');
+                    
+                    const overlay = document.getElementById('toc-overlay');
+                    if (overlay) overlay.remove();
+                }
+            });
+        });
+
+        // Toggle para la tabla de contenidos
+        document.addEventListener('DOMContentLoaded', () => {
+        const tocToggle = document.getElementById('tocToggle');
+        const tocContent = document.getElementById('tocContent');
+        const toc = document.getElementById('toc');
+        let isCollapsed = false;
+        
+        // Función para ajustar el contenido principal
+        function adjustMainContent(collapsed) {
+            const mainSections = document.querySelectorAll('main > section, .timeline-container, .current-improvements > .container, .ods-impact-section > .container');
+            
+            mainSections.forEach(section => {
+                if (collapsed) {
+                    // Cuando está colapsado, volver al ancho completo
+                    section.style.maxWidth = '';
+                    section.style.marginRight = '';
+                } else {
+                    // Cuando está expandido, dejar espacio para el TOC
+                    if (window.innerWidth >= 1024) {
+                        section.style.maxWidth = 'calc(100% - 300px)';
+                        section.style.marginRight = 'auto';
+                    }
+                }
+            });
+        }
+        
+        // Cargar estado guardado
+        const savedState = localStorage.getItem('tocCollapsed');
+        if (savedState === 'true') {
+            isCollapsed = true;
+            tocContent.style.display = 'none';
+            tocToggle.querySelector('svg').style.transform = 'rotate(0deg)';
+            toc.style.width = 'auto';
+            adjustMainContent(true);
+        } else {
+            adjustMainContent(false);
+        }
+        
+        tocToggle.addEventListener('click', () => {
+            isCollapsed = !isCollapsed;
+            
+            if (isCollapsed) {
+                // Colapsar
+                tocContent.style.display = 'none';
+                tocToggle.querySelector('svg').style.transform = 'rotate(0deg)';
+                toc.style.width = 'auto';
+                adjustMainContent(true);
+            } else {
+                // Expandir
+                tocContent.style.display = 'block';
+                tocToggle.querySelector('svg').style.transform = 'rotate(90deg)';
+                toc.style.width = '16rem'; // w-64
+                adjustMainContent(false);
+            }
+            
+            // Guardar estado
+            localStorage.setItem('tocCollapsed', isCollapsed);
+        });
+        
+        // Ajustar en cambio de tamaño de ventana
+        window.addEventListener('resize', () => {
+            if (!isCollapsed) {
+                adjustMainContent(false);
+            }
+        });
+    });
+
+    // Asegurar que los enlaces sean clickeables
+    document.addEventListener('DOMContentLoaded', () => {
+        // Prevenir que eventos del TOC interfieran
+        const tocElement = document.getElementById('toc');
+        if (tocElement) {
+            tocElement.addEventListener('click', (e) => {
+                if (e.target === tocElement) {
+                    e.stopPropagation();
+                }
+            });
+        }
+        
+        // Verificar que el enlace ODS funcione
+        const odsLink = document.querySelector('a[href*="sustainabledevelopment"]');
+        if (odsLink) {
+            odsLink.style.position = 'relative';
+            odsLink.style.zIndex = '100';
+        }
+    });
+
+    </script>
+</body>
+</html>
