@@ -869,6 +869,8 @@
             z-index: 10;
         }
 
+        
+
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -1225,11 +1227,10 @@
         <section class="ods-impact-section"  id="ods-impact">
             <div class="container mx-auto px-4 py-20">
                 <div class="text-center mb-12">
-                    <div class="inline-flex items-center gap-3 mb-6">
-                        <img src="./assets/ods4.png" alt="ODS 4" class="h-16 w-16" 
-                            onerror="this.src='https://www.un.org/sustainabledevelopment/wp-content/uploads/2018/09/Goal-4.png'">
-                        <h2 class="text-3xl font-bold text-indigo-700">Impacto en ODS 4: Educación de Calidad</h2>
+                    <div class="mb-6">
+                     <h2 class="text-3xl font-bold text-indigo-700">Impacto en ODS 4: Educación de Calidad</h2>
                     </div>
+
                     <p class="text-lg text-gray-600 max-w-4xl mx-auto">
                         Talim contribuye directamente a alcanzar las metas del Objetivo de Desarrollo Sostenible 4, 
                         abordando las brechas educativas globales con tecnología adaptativa y accesible.
@@ -1575,6 +1576,9 @@
                     const targetSection = document.getElementById(targetId);
                     
                     if (targetSection) {
+                        // Agregar clase temporal para smooth scroll
+                        document.documentElement.classList.add('toc-navigating');
+                        
                         const offset = 100; // Ajuste para la navbar
                         const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - offset;
                         
@@ -1582,9 +1586,15 @@
                             top: targetPosition,
                             behavior: 'smooth'
                         });
+                        
+                        // Remover clase después de la navegación
+                        setTimeout(() => {
+                            document.documentElement.classList.remove('toc-navigating');
+                        }, 1000);
                     }
                 });
             });
+
             
             // Scroll spy - destacar sección actual
             const observerOptions = {
@@ -1663,70 +1673,144 @@
 
         // Toggle para la tabla de contenidos
         document.addEventListener('DOMContentLoaded', () => {
-        const tocToggle = document.getElementById('tocToggle');
-        const tocContent = document.getElementById('tocContent');
-        const toc = document.getElementById('toc');
-        let isCollapsed = false;
-        
-        // Función para ajustar el contenido principal
-        function adjustMainContent(collapsed) {
-            const mainSections = document.querySelectorAll('main > section, .timeline-container, .current-improvements > .container, .ods-impact-section > .container');
+            const tocToggle = document.getElementById('tocToggle');
+            const tocContent = document.getElementById('tocContent');
+            const toc = document.getElementById('toc');
+            let isCollapsed = false;
             
-            mainSections.forEach(section => {
-                if (collapsed) {
-                    // Cuando está colapsado, volver al ancho completo
-                    section.style.maxWidth = '';
-                    section.style.marginRight = '';
-                } else {
-                    // Cuando está expandido, dejar espacio para el TOC
-                    if (window.innerWidth >= 1024) {
-                        section.style.maxWidth = 'calc(100% - 300px)';
-                        section.style.marginRight = 'auto';
+            // Función para ajustar el contenido principal
+            function adjustMainContent(collapsed) {
+                // Guardar posición EXACTA del scroll antes de cualquier cambio
+                const scrollY = window.scrollY;
+                const scrollX = window.scrollX;
+                
+                // Buscar el elemento más visible en el viewport
+                let mostVisibleElement = null;
+                let maxVisibility = 0;
+                
+                const elements = document.querySelectorAll('section[id], div[id]');
+                const viewportHeight = window.innerHeight;
+                const viewportTop = scrollY;
+                const viewportBottom = scrollY + viewportHeight;
+                
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const elTop = scrollY + rect.top;
+                    const elBottom = scrollY + rect.bottom;
+                    
+                    // Calcular qué porcentaje del elemento es visible
+                    const visibleTop = Math.max(viewportTop, elTop);
+                    const visibleBottom = Math.min(viewportBottom, elBottom);
+                    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+                    const visibility = visibleHeight / rect.height;
+                    
+                    if (visibility > maxVisibility) {
+                        maxVisibility = visibility;
+                        mostVisibleElement = el;
                     }
-                }
-            });
-        }
-        
-        // Cargar estado guardado
-        const savedState = localStorage.getItem('tocCollapsed');
-        if (savedState === 'true') {
-            isCollapsed = true;
-            tocContent.style.display = 'none';
-            tocToggle.querySelector('svg').style.transform = 'rotate(0deg)';
-            toc.style.width = 'auto';
-            adjustMainContent(true);
-        } else {
-            adjustMainContent(false);
-        }
-        
-        tocToggle.addEventListener('click', () => {
-            isCollapsed = !isCollapsed;
+                });
+                
+                // Guardar offset relativo del elemento más visible
+                const elementOffset = mostVisibleElement ? 
+                    mostVisibleElement.getBoundingClientRect().top : 0;
+                
+                // Hacer los cambios de layout
+                const mainSections = document.querySelectorAll('main > section, .timeline-container, .current-improvements > .container, .ods-impact-section > .container');
+                
+                // Deshabilitar transiciones temporalmente para evitar animaciones
+                mainSections.forEach(section => {
+                    section.style.transition = 'none';
+                    
+                    if (collapsed) {
+                        section.style.maxWidth = '';
+                        section.style.marginRight = '';
+                    } else {
+                        if (window.innerWidth >= 1024) {
+                            section.style.maxWidth = 'calc(100% - 300px)';
+                            section.style.marginRight = 'auto';
+                        }
+                    }
+                });
+                
+                // Forzar reflow
+                document.body.offsetHeight;
+                
+                // Restaurar la posición del scroll
+                requestAnimationFrame(() => {
+                    if (mostVisibleElement) {
+                        // Calcular la nueva posición del elemento
+                        const newRect = mostVisibleElement.getBoundingClientRect();
+                        const scrollDiff = newRect.top - elementOffset;
+                        
+                        // Aplicar el ajuste
+                        window.scrollTo({
+                            top: scrollY + scrollDiff,
+                            left: scrollX,
+                            behavior: 'instant'
+                        });
+                    } else {
+                        // Si no encontramos elemento, mantener la posición original
+                        window.scrollTo({
+                            top: scrollY,
+                            left: scrollX,
+                            behavior: 'instant'
+                        });
+                    }
+                    
+                    // Re-habilitar transiciones después de un frame
+                    requestAnimationFrame(() => {
+                        mainSections.forEach(section => {
+                            section.style.transition = '';
+                        });
+                    });
+                });
+            }
             
-            if (isCollapsed) {
-                // Colapsar
+            // Cargar estado guardado
+            const savedState = localStorage.getItem('tocCollapsed');
+            if (savedState === 'true') {
+                isCollapsed = true;
                 tocContent.style.display = 'none';
                 tocToggle.querySelector('svg').style.transform = 'rotate(0deg)';
                 toc.style.width = 'auto';
-                adjustMainContent(true);
-            } else {
-                // Expandir
-                tocContent.style.display = 'block';
-                tocToggle.querySelector('svg').style.transform = 'rotate(90deg)';
-                toc.style.width = '16rem'; // w-64
-                adjustMainContent(false);
+                // NO ajustar contenido en la carga inicial
             }
             
-            // Guardar estado
-            localStorage.setItem('tocCollapsed', isCollapsed);
-        });
-        
-        // Ajustar en cambio de tamaño de ventana
-        window.addEventListener('resize', () => {
-            if (!isCollapsed) {
-                adjustMainContent(false);
-            }
-        });
+            tocToggle.addEventListener('click', () => {
+                isCollapsed = !isCollapsed;
+                
+                if (isCollapsed) {
+                    // Colapsar
+                    tocContent.style.display = 'none';
+                    tocToggle.querySelector('svg').style.transform = 'rotate(0deg)';
+                    toc.style.width = 'auto';
+                    adjustMainContent(true);
+                } else {
+                    // Expandir
+                    tocContent.style.display = 'block';
+                    tocToggle.querySelector('svg').style.transform = 'rotate(90deg)';
+                    toc.style.width = '16rem'; // w-64
+                    adjustMainContent(false);
+                }
+                
+                // Guardar estado
+                localStorage.setItem('tocCollapsed', isCollapsed);
+            });
+            
+            // Ajustar en cambio de tamaño de ventana
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    // Solo ajustar si el TOC está expandido
+                    if (!isCollapsed && window.innerWidth >= 1024) {
+                        adjustMainContent(false);
+                    }
+                }, 250);
+            });
     });
+
+
 
     // Asegurar que los enlaces sean clickeables
     document.addEventListener('DOMContentLoaded', () => {
